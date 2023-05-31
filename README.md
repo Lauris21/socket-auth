@@ -1,5 +1,5 @@
 # Dependecias --SERVER--
-npm i express dotenv cors mongoose mongodb bcrypt jsonwebtoken socket.io google-auth-library
+npm i express dotenv cors mongoose mongodb validator bcrypt jsonwebtoken socket.io google-auth-library
 
 npm -D i nodemon
 
