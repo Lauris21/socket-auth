@@ -10,3 +10,6 @@ npm install react-router-dom@ socket.io-client
 
 ### Descripción:
 App en la que solo los usuarios autentificados pueden enviar diferentes mensajes entre las salas públicas o privadas.
+
+#### Docu
+Google Sign-In (Google Identity) - Página Oficial
