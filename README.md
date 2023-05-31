@@ -1,7 +1,10 @@
-# Dependecias
+# Dependecias --SERVER--
 npm i express dotenv cors mongoose mongodb bcrypt jsonwebtoken socket.io google-auth-library
 
 npm -D i nodemon
+
+# Dependecias --FRONT--
+npm install react-router-dom@ socket.io-client
 
 ## Ejecutar `npm i`
 

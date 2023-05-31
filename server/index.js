@@ -13,7 +13,6 @@ const app = express();
 
 app.use(express.static("public"));
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
 
 const cors = require("cors");
 app.use(
@@ -22,6 +21,20 @@ app.use(
     credentials: true,
   })
 );
+
+//!Conexion con SOCKET IO
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:5173",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`⚡️ ${socket.id} user just connected!`);
+  socket.on("disconnect", () => {
+    console.log("A user disconnected 💥");
+  });
+});
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: false }));
