@@ -1,19 +1,22 @@
 const multer = require("multer");
-const cloudinary = require("cloudinary");
+const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const storage = CloudinaryStorage({
+//Creamos el almacen
+const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "App-chat",
+    folder: "ChatApp",
     allowedFormats: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
   },
 });
 
+//Creamos la función de subir imagenes
 const upload = multer({ storage });
 
+//Función de borrado de imagenes
 const deleteImgCloudinary = (imgUrl) => {
   const imgSplited = imgUrl.split("/");
   const nameSplited = imgSplited[imgSplited.length - 1].split(".");

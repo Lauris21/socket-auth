@@ -3,6 +3,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const { configCloudinary } = require("./src/middlewares/files");
+configCloudinary();
+
 const { connect } = require("./src/utils/database");
 connect();
 
@@ -11,10 +14,11 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-app.use(express.static("public"));
-const server = require("http").createServer(app);
+//app.use(express.static("public"));
+// const server = require("http").createServer(app);
 
 const cors = require("cors");
+
 app.use(
   cors({
     origin: "*",
@@ -22,22 +26,26 @@ app.use(
   })
 );
 
-//!Conexion con SOCKET IO
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "http://localhost:5173",
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log(`⚡️ ${socket.id} user just connected!`);
-  socket.on("disconnect", () => {
-    console.log("A user disconnected 💥");
-  });
-});
-
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: false }));
+
+const { UserRoutes } = require("./src/api/routes/user.routes");
+
+app.use("/api/v1/user", UserRoutes);
+
+// //!Conexion con SOCKET IO
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "http://localhost:5173",
+//   },
+// });
+
+// io.on("connection", (socket) => {
+//   console.log(`⚡️ ${socket.id} user just connected!`);
+//   socket.on("disconnect", () => {
+//     console.log("A user disconnected 💥");
+//   });
+// });
 
 app.use("*", (req, res, next) => {
   const error = new Error("Route not found");
@@ -53,6 +61,6 @@ app.use((error, req, res) => {
 
 app.disable("x-powered-by");
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Listening on PORT ${BASE_URL}${PORT}`);
 });
