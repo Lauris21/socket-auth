@@ -1,3 +1,4 @@
+const { verifyGoogle } = require("../../helpers/google-verify");
 const { deleteImgCloudinary } = require("../../middlewares/files");
 const { generateToken } = require("../../utils/token");
 
@@ -93,12 +94,15 @@ const deleteUser = async (req, res, next) => {
 };
 
 const googleSignIn = async (req, res, next) => {
+  const { token } = req.body;
+
   try {
-    const { token } = req.body;
+    const googleUser = await verifyGoogle(token);
 
     if (token) {
       return res.status(200).json({
         msg: "Token Google okey 👌🏽",
+        googleUser,
         token,
       });
     } else {

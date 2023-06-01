@@ -14,9 +14,7 @@ const Login = () => {
   const errorMsg = (error) => {
     console.log(error);
   };
-  useEffect(() => {
-    console.log(res);
-  }, [res]);
+
   return (
     <div>
       <h1>Login</h1>
