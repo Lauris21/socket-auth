@@ -4,7 +4,7 @@ npm i express dotenv cors mongoose mongodb validator bcrypt jsonwebtoken socket.
 npm -D i nodemon
 
 # Dependecias --FRONT--
-npm install react-router-dom@ socket.io-client
+npm install react-router-dom@ socket.io-client  google-auth-library @react-oauth/google@latest
 
 ## Ejecutar `npm i`
 

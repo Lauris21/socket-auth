@@ -15,7 +15,7 @@ const PORT = process.env.PORT;
 const app = express();
 
 //app.use(express.static("public"));
-// const server = require("http").createServer(app);
+const server = require("http").createServer(app);
 
 const cors = require("cors");
 
@@ -33,19 +33,19 @@ const { UserRoutes } = require("./src/api/routes/user.routes");
 
 app.use("/api/v1/user", UserRoutes);
 
-// //!Conexion con SOCKET IO
-// const io = require("socket.io")(server, {
-//   cors: {
-//     origin: "http://localhost:5173",
-//   },
-// });
+//!Conexion con SOCKET IO
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:5173",
+  },
+});
 
-// io.on("connection", (socket) => {
-//   console.log(`⚡️ ${socket.id} user just connected!`);
-//   socket.on("disconnect", () => {
-//     console.log("A user disconnected 💥");
-//   });
-// });
+io.on("connection", (socket) => {
+  console.log(`⚡️ ${socket.id} user just connected!`);
+  socket.on("disconnect", () => {
+    console.log("A user disconnected 💥");
+  });
+});
 
 app.use("*", (req, res, next) => {
   const error = new Error("Route not found");
@@ -61,6 +61,6 @@ app.use((error, req, res) => {
 
 app.disable("x-powered-by");
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Listening on PORT ${BASE_URL}${PORT}`);
 });
