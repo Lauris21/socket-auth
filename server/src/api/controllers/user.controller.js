@@ -76,4 +76,20 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login };
+const deleteUser = async (req, res, next) => {
+  try {
+    const { _id, image } = req.user;
+    await User.findByIdAndDelete(_id);
+
+    if (await User.findById(_id)) {
+      return res.status(404).json("User dont delete");
+    } else {
+      deleteImgCloudinary(image);
+      return res.status(200).json("User has been delete");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { register, login, deleteUser };
