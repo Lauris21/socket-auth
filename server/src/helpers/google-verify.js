@@ -13,7 +13,14 @@ const verifyGoogle = async (token = "") => {
     audience: CLIENT_ID,
   });
   const payload = ticket.getPayload();
-  const userid = payload["sub"];
+
+  const { name, picture, email } = payload;
+
+  return {
+    name,
+    picture,
+    email,
+  };
 };
 
 module.exports = { verifyGoogle };

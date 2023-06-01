@@ -7,8 +7,8 @@ const Login = () => {
   const [res, setRes] = useState({});
 
   const responseMsg = async (codeResponse) => {
-    const token = { token: codeResponse.credential };
-    setRes(await googleSignIn(JSON.stringify(token)));
+    const token_id = { token_id: codeResponse.credential };
+    setRes(await googleSignIn(JSON.stringify(token_id)));
   };
 
   const errorMsg = (error) => {

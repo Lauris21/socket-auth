@@ -94,17 +94,39 @@ const deleteUser = async (req, res, next) => {
 };
 
 const googleSignIn = async (req, res, next) => {
-  const { token } = req.body;
+  const { token_id } = req.body;
 
   try {
-    const googleUser = await verifyGoogle(token);
+    const googleUser = await verifyGoogle(token_id);
 
-    if (token) {
-      return res.status(200).json({
-        msg: "Token Google okey 👌🏽",
-        googleUser,
-        token,
-      });
+    const { name, picture, email } = googleUser;
+
+    const userDB = await User.findOne({ email });
+
+    if (token_id) {
+      if (!userDB) {
+        const data = {
+          name,
+          email,
+          google: true,
+          password: "...123Hola!",
+          image: picture,
+        };
+
+        const newUser = new User(data);
+        await newUser.save();
+
+        return res.status(200).json({
+          msg: "Usuario Google create okey 👌🏽",
+          newUser,
+        });
+      } else {
+        const token = generateToken(userDB._id, email);
+        return res.status(200).json({
+          userDB,
+          token,
+        });
+      }
     } else {
       return res.status(404).json("Token Google not found ❌");
     }
