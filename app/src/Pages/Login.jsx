@@ -1,8 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
+import { googleSignIn } from "../services/API_Chat/user.service";
+//import { useState } from "react";
 
 const Login = () => {
-  const responseMsg = (response) => {
-    console.log(response);
+  // const [res, setRes] = useState({});
+
+  const responseMsg = async (codeResponse) => {
+    const token = { token: codeResponse.credential };
+    await googleSignIn(JSON.stringify(token));
   };
 
   const errorMsg = (error) => {

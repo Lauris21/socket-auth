@@ -92,4 +92,21 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, deleteUser };
+const googleSignIn = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+
+    if (token) {
+      return res.status(200).json({
+        msg: "Token Google okey 👌🏽",
+        token,
+      });
+    } else {
+      return res.status(404).json("Token Google not found ❌");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { register, login, deleteUser, googleSignIn };
