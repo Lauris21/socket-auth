@@ -121,6 +121,12 @@ const googleSignIn = async (req, res, next) => {
           newUser,
         });
       } else {
+        // Si el usuario en DB esta en estado false porque ha sido bloqueado
+        if (!userDB.estado) {
+          return res.status(401).json({
+            msg: "Hable con el administrador, usuario bloqueado",
+          });
+        }
         const token = generateToken(userDB._id, email);
         return res.status(200).json({
           userDB,

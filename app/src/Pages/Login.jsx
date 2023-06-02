@@ -15,12 +15,18 @@ const Login = () => {
     console.log(error);
   };
 
+  const handleLogout = () => {
+    console.log(google.accounts.id);
+  };
+
   return (
     <div>
       <h1>Login</h1>
       <br />
       <br />
       <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
+      <br />
+      <button onClick={() => handleLogout()}>Logout</button>
     </div>
   );
 };
