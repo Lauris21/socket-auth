@@ -1,0 +1,14 @@
+body {
+    padding: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgb(34, 35, 46);
+    color: rgb(217, 210, 210);
+  }
+  
+  * {
+    padding: 0 auto;
+  }
+  

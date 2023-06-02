@@ -4,8 +4,10 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div>Home</div> <h1>Wellcome</h1>
-      <button onClick={() => navigate("/login")}>Login</button>
+      <h1>Wellcome</h1>
+      <button className="btn btn-primary" onClick={() => navigate("/login")}>
+        Login
+      </button>
     </>
   );
 };

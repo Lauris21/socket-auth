@@ -1,9 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { googleSignIn } from "../services/API_Chat/user.service";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../constext/userContext";
 
 const Login = () => {
-  const [res, setRes] = useState({});
+  const [mensajeLogin, setMensajeLogin] = useState(false);
+  const [res, setRes] = useState(null);
+
+  const { login } = useContext(UserContext);
 
   const responseMsg = async (codeResponse) => {
     const token_id = { token_id: codeResponse.credential };
@@ -14,23 +18,35 @@ const Login = () => {
     console.log(error);
   };
 
-  const handleLogout = () => {
-    console.log(google.accounts.id);
-    google.accounts.id.disableAutoSelect();
-
-    google.accounts.id.revoke(localStorage.getItem("email"), () => {
-      localStorage.clear();
-    });
-  };
+  useEffect(() => {
+    if (res !== null) {
+      if (res.data.msg.includes("login")) {
+        login(res.data.userDB);
+      } else {
+        setMensajeLogin(true);
+        const time = setTimeout(() => {
+          setMensajeLogin(false);
+        }, 3000);
+        return () => clearTimeout(time);
+      }
+    }
+  }, [res]);
 
   return (
     <div>
-      <h1>Login</h1>
-      <br />
-      <br />
-      <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
-      <br />
-      <button onClick={() => handleLogout()}>Logout</button>
+      {mensajeLogin ? (
+        <div className="fix">
+          <h2>Debe Loguearse</h2>
+        </div>
+      ) : (
+        <>
+          <h1>Google Sign In</h1>
+          <br />
+          <br />
+          <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
+          <br />
+        </>
+      )}
     </div>
   );
 };
