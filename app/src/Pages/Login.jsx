@@ -1,7 +1,6 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { googleSignIn } from "../services/API_Chat/user.service";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const Login = () => {
   const [res, setRes] = useState({});
@@ -17,6 +16,11 @@ const Login = () => {
 
   const handleLogout = () => {
     console.log(google.accounts.id);
+    google.accounts.id.disableAutoSelect();
+
+    google.accounts.id.revoke(localStorage.getItem("email"), () => {
+      localStorage.clear();
+    });
   };
 
   return (
