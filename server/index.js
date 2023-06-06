@@ -34,18 +34,22 @@ const { UserRoutes } = require("./src/api/routes/user.routes");
 app.use("/api/v1/user", UserRoutes);
 
 //!Conexion con SOCKET IO
+const { socketController } = require("./src/sockets/socket.controller");
+
 const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:5173",
   },
 });
 
-io.on("connection", (socket) => {
-  console.log(`⚡️ ${socket.id} user just connected!`);
-  socket.on("disconnect", () => {
-    console.log("A user disconnected 💥");
-  });
-});
+io.on("connection", socketController);
+
+// io.on("connection", (socket) => {
+//   console.log(`⚡️ ${socket.id} user just connected!`);
+//   socket.on("disconnect", () => {
+//     console.log("A user disconnected 💥");
+//   });
+// });
 
 app.use("*", (req, res, next) => {
   const error = new Error("Route not found");

@@ -9,6 +9,7 @@ import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
 import { UserContextProvider } from "./constext/userContext.jsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
+import Register from "./Pages/Register.jsx";
 
 const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/" element={<App />}>
               <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
               <Route
                 path="/dashboard"
                 element={

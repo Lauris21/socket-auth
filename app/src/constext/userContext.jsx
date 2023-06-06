@@ -20,8 +20,7 @@ export const UserContextProvider = ({ children }) => {
 
   const login = (data) => {
     setUser(data);
-    const dataStorage = JSON.stringify(data);
-    localStorage.setItem("user", dataStorage);
+    localStorage.setItem("user", data.email);
     navigate("/dashboard");
   };
 
