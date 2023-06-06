@@ -13,14 +13,15 @@ export const UserContextProvider = ({ children }) => {
   });
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("user");
     setUser(null);
     navigate("/login");
   };
 
   const login = (data) => {
     setUser(data);
-    localStorage.setItem("user", data.email);
+    const dataStorage = JSON.stringify(data);
+    localStorage.setItem("user", dataStorage);
     navigate("/dashboard");
   };
 
