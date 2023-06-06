@@ -1,5 +1,6 @@
 const { verifyGoogle } = require("../../helpers/google-verify");
 const { deleteImgCloudinary } = require("../../middlewares/files");
+const randomPassword = require("../../utils/randomPassword");
 const { generateToken } = require("../../utils/token");
 
 const User = require("../models/user.model");
@@ -109,7 +110,7 @@ const googleSignIn = async (req, res, next) => {
           name,
           email,
           google: true,
-          password: "...123Hola!",
+          password: randomPassword(),
           image: picture,
         };
 
