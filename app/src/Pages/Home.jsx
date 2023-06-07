@@ -23,17 +23,16 @@ const Home = () => {
 
   useEffect(() => {
     if (res !== null) {
-      console.log(res);
-      // if (res.data.msg.includes("login")) {
-      //   localStorage.setItem("token", res.data.token);
-      //   login(res.data.userDB);
-      // } else {
-      //   setMensajeLogin(true);
-      //   const time = setTimeout(() => {
-      //     setMensajeLogin(false);
-      //   }, 3000);
-      //   return () => clearTimeout(time);
-      // }
+      if (res.data.msg.includes("login")) {
+        localStorage.setItem("token", res.data.token);
+        login(res.data.userDB);
+      } else {
+        setMensajeLogin(true);
+        const time = setTimeout(() => {
+          setMensajeLogin(false);
+        }, 3000);
+        return () => clearTimeout(time);
+      }
     }
   }, [res]);
 

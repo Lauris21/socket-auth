@@ -20,4 +20,8 @@ body {
     justify-content: center;
     align-items: center;
   }
+
+  .image_profile {
+    max-width: 7rem;
+  }
   

@@ -106,21 +106,38 @@ const googleSignIn = async (req, res, next) => {
 
     if (token_id) {
       if (!userDB) {
-        const data = {
-          name,
-          email,
-          google: true,
-          password: randomPassword(),
-          image: picture,
-        };
+        if (picture == undefined) {
+          const data = {
+            name,
+            email,
+            google: true,
+            password: randomPassword(),
+            image: "https://pic.onlinewebfonts.com/svg/img_181369.png",
+          };
+          const newUser = new User(data);
+          await newUser.save();
 
-        const newUser = new User(data);
-        await newUser.save();
+          return res.status(200).json({
+            msg: "User Google create okey 👌🏽",
+            newUser,
+          });
+        } else {
+          const data = {
+            name,
+            email,
+            google: true,
+            password: randomPassword(),
+            image: picture,
+          };
 
-        return res.status(200).json({
-          msg: "User Google create okey 👌🏽",
-          newUser,
-        });
+          const newUser = new User(data);
+          await newUser.save();
+
+          return res.status(200).json({
+            msg: "User Google create okey 👌🏽",
+            newUser,
+          });
+        }
       } else {
         // Si el usuario en DB esta en estado false porque ha sido bloqueado
         if (!userDB.estado) {

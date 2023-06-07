@@ -14,8 +14,9 @@ export const UserContextProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
-    navigate("/login");
+    navigate("/");
   };
 
   const login = (data) => {
