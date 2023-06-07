@@ -1,5 +1,6 @@
 const { verifyGoogle } = require("../../helpers/google-verify");
 const { deleteImgCloudinary } = require("../../middlewares/files");
+const randomCode = require("../../utils/randomCode");
 const randomPassword = require("../../utils/randomPassword");
 const { generateToken } = require("../../utils/token");
 
@@ -11,7 +12,7 @@ dotenv.config();
 
 const register = async (req, res, next) => {
   let catchImg = req.file?.path;
-  // console.log("body", req.body);
+
   try {
     await User.syncIndexes();
 
@@ -113,6 +114,8 @@ const googleSignIn = async (req, res, next) => {
             google: true,
             password: randomPassword(),
             image: "https://pic.onlinewebfonts.com/svg/img_181369.png",
+            check: true,
+            confirmationCode: randomCode(),
           };
           const newUser = new User(data);
           await newUser.save();
@@ -128,6 +131,8 @@ const googleSignIn = async (req, res, next) => {
             google: true,
             password: randomPassword(),
             image: picture,
+            check: true,
+            confirmationCode: randomCode(),
           };
 
           const newUser = new User(data);

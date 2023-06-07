@@ -1,8 +1,8 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { googleSignIn } from "../services/API_Chat/user.service";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../constext/userContext";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../constext/userContext";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const Home = () => {
   const [mensajeLogin, setMensajeLogin] = useState(false);
   const [res, setRes] = useState(null);
 
-  const { login } = useContext(UserContext);
+  const { login, user } = useAuth();
 
   const responseMsg = async (codeResponse) => {
     const token_id = { token_id: codeResponse.credential };
@@ -24,8 +24,7 @@ const Home = () => {
   useEffect(() => {
     if (res !== null) {
       if (res.data.msg.includes("login")) {
-        localStorage.setItem("token", res.data.token);
-        login(res.data.userDB);
+        login(res.data);
       } else {
         setMensajeLogin(true);
         const time = setTimeout(() => {
@@ -38,7 +37,9 @@ const Home = () => {
 
   return (
     <div className="w-50 h-50 d-flex flex-column align-items-center">
-      {mensajeLogin ? (
+      {user != null ? (
+        <Navigate to="/dashboard" />
+      ) : mensajeLogin ? (
         <div className="fix">
           <h2>Debe Loguearse</h2>
         </div>

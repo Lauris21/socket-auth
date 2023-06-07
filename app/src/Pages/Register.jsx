@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerDB } from "../services/API_Chat/user.service";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -12,6 +14,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerDB(data);
+    navigate("/login");
   };
   useEffect(() => {
     console.log(data);

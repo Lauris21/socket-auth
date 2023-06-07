@@ -8,7 +8,8 @@ export const UserContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(() => {
     if (localStorage.getItem("user")) {
-      return localStorage.getItem("user");
+      const data = localStorage.getItem("user");
+      return JSON.parse(data);
     } else return null;
   });
 
@@ -20,8 +21,15 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const login = (data) => {
-    setUser(data);
-    localStorage.setItem("user", data.email);
+    const dataCustom = {
+      token: data.token,
+      name: data.userDB.name,
+      email: data.userDB.email,
+      image: data.userDB.image,
+    };
+    const dataString = JSON.stringify(dataCustom);
+    setUser(dataCustom);
+    localStorage.setItem("user", dataString);
     navigate("/dashboard");
   };
 
