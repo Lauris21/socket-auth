@@ -2,7 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { googleSignIn } from "../services/API_Chat/user.service";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../constext/userContext";
+import { useAuth } from "../context/userContext";
 
 const Home = () => {
   const navigate = useNavigate();

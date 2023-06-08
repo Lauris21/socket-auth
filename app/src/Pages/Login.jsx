@@ -15,20 +15,22 @@ const Login = () => {
     <div className="w-50 d-flex flex-column align-items-center gap-5">
       <h1>Login</h1>
 
-      <div className="d-flex flex-column gap-3">
+      <form className="d-flex flex-column gap-3">
         <input
           type="email"
           id="email"
           placeholder="email"
+          autoComplete="false"
           onChange={(e) => setData({ ...data, email: e.target.value })}
         />
         <input
           type="password"
           id="password"
           placeholder="password"
+          autoComplete="false"
           onChange={(e) => setData({ ...data, password: e.target.value })}
         />
-      </div>
+      </form>
       <div className="d-flex flex-column gap-3">
         <button
           type="button"

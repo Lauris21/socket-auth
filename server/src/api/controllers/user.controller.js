@@ -3,26 +3,28 @@ const { deleteImgCloudinary } = require("../../middlewares/files");
 const randomCode = require("../../utils/randomCode");
 const randomPassword = require("../../utils/randomPassword");
 const { generateToken } = require("../../utils/token");
-
+const nodemailer = require("nodemailer");
 const User = require("../models/user.model");
 
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const URL_COMPLET = process.env.URL_COMPLET;
+
 const register = async (req, res, next) => {
   let catchImg = req.file?.path;
 
   try {
     await User.syncIndexes();
-
+    let confirmationCode = randomCode();
     const UserExist = await User.findOne(
       { email: req.body.email },
       { name: req.body.name }
     );
 
     if (!UserExist) {
-      const newUser = new User({ ...req.body });
+      const newUser = new User({ ...req.body, confirmationCode });
 
       if (req.file) {
         newUser.image = req.file.path;
@@ -34,7 +36,11 @@ const register = async (req, res, next) => {
         const userSave = await newUser.save();
 
         if (userSave) {
-          return res.status(200).json(userSave);
+          return res.redirect(
+            308,
+            `${URL_COMPLET}/api/v1/user/sendMailCode/${userSave._id}`
+          );
+          // return res.status(200).json(userSave);
         } else {
           return res.status(409).json(userSave, "User not save");
         }
@@ -48,6 +54,48 @@ const register = async (req, res, next) => {
   } catch (error) {
     if (req.file) deleteImgCloudinary(catchImg);
     console.log("error", error);
+    return next(error);
+  }
+};
+
+const sendMailCode = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userDB = await User.findById(id);
+
+    const EMAIL_ENV = process.env.EMAIL;
+    const PASSWORD_ENV = process.env.PASSWORD;
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: EMAIL_ENV,
+        pass: PASSWORD_ENV,
+      },
+    });
+
+    const mailOptions = {
+      from: EMAIL_ENV,
+      to: userDB.email,
+      subject: "Confirmation Code",
+      text: `Your confirmation code is ${userDB.confirmationCode}. Thanks ${userDB.name}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(404).json({
+          user: userDB,
+          confirmationCode: "error, resend code",
+        });
+      } else {
+        return res.status(200).json({
+          user: userDB,
+          confirmationCode: userDB.confirmationCode,
+        });
+      }
+    });
+  } catch (error) {
     return next(error);
   }
 };
@@ -165,4 +213,4 @@ const googleSignIn = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login, deleteUser, googleSignIn };
+module.exports = { register, sendMailCode, login, deleteUser, googleSignIn };

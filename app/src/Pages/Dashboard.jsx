@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { UserContext } from "../constext/userContext";
+import { UserContext } from "../context/userContext";
 
 // import socketIo from "socket.io-client";
 // const socket = socketIo.connect("http://localhost:8080");
