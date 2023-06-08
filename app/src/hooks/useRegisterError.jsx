@@ -2,10 +2,9 @@ import Swal from "sweetalert2";
 
 const useRegisterError = (res, setRegisterOk) => {
   if (res?.status == 200) {
-    console.log("entro");
     localStorage.setItem("data", JSON.stringify(res));
     setRegisterOk(() => true);
-    console.log("entro33", Swal);
+
     Swal.fire({
       icon: "success",
       title: "Welcome 👽",
