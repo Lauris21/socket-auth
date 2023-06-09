@@ -6,6 +6,8 @@ const {
   deleteUser,
   googleSignIn,
   sendMailCode,
+  checkUser,
+  resendCode,
 } = require("../controllers/user.controller");
 
 const express = require("express");
@@ -16,6 +18,8 @@ UserRoutes.post("/register", upload.single("image"), register);
 UserRoutes.post("/login", login);
 UserRoutes.post("/google", googleSignIn);
 UserRoutes.delete("/delete", [isAuth], deleteUser);
+UserRoutes.post("/checkUser", checkUser);
+UserRoutes.post("/resendCode", resendCode);
 
 UserRoutes.post("/sendMailCode/:id", sendMailCode);
 module.exports = { UserRoutes };

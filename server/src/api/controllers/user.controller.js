@@ -8,9 +8,12 @@ const User = require("../models/user.model");
 
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
+const setError = require("../../helpers/handleError");
 dotenv.config();
 
 const URL_COMPLET = process.env.URL_COMPLET;
+const EMAIL_ENV = process.env.EMAIL;
+const PASSWORD_ENV = process.env.PASSWORD;
 
 const register = async (req, res, next) => {
   let catchImg = req.file?.path;
@@ -63,9 +66,6 @@ const sendMailCode = async (req, res, next) => {
     const { id } = req.params;
     const userDB = await User.findById(id);
 
-    const EMAIL_ENV = process.env.EMAIL;
-    const PASSWORD_ENV = process.env.PASSWORD;
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -97,6 +97,79 @@ const sendMailCode = async (req, res, next) => {
     });
   } catch (error) {
     return next(error);
+  }
+};
+
+const checkUser = async (req, res, next) => {
+  try {
+    const { email, confirmatinCode } = req.body;
+    const userDB = await User.findOne({ email });
+
+    if (!userDB) {
+      return res.status(404).json("User not found");
+    } else {
+      if (confirmatinCode === userDB.confirmationCode) {
+        try {
+          await userDB.updateOne({ check: true });
+        } catch (error) {
+          return res.status(404).json(error.mensaje);
+        }
+        const updateUser = await User.findOne({ email });
+
+        return res.status(200).json({
+          testCheckOk: updateUser.check == true ? true : false,
+        });
+      } else {
+        await User.findByIdAndDelete(userDB._id);
+
+        return res.status(200).json({
+          userDB,
+          check: false,
+          delete: (await User.findById(userDB._id))
+            ? "error delete user"
+            : "Ok, delete user",
+        });
+      }
+    }
+  } catch (error) {
+    return next(setError(500, "Error check code"));
+  }
+};
+
+const resendCode = async (req, res, next) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: EMAIL_ENV,
+        pass: PASSWORD_ENV,
+      },
+    });
+
+    const userDB = await User.findOne({ email: req.body.email });
+
+    if (userDB) {
+      const mailOptions = {
+        from: EMAIL_ENV,
+        to: userDB.email,
+        subject: "Confirmation Code",
+        text: `Your confirmation code is ${userDB.confirmationCode}. Thanks ${userDB.name}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return next(error);
+        } else {
+          return res.status(200).json({
+            resend: true,
+          });
+        }
+      });
+    } else {
+      return res.status(404).json("User not found");
+    }
+  } catch (error) {
+    return next(setError(500, error.message || "Error resend code"));
   }
 };
 
@@ -213,4 +286,12 @@ const googleSignIn = async (req, res, next) => {
   }
 };
 
-module.exports = { register, sendMailCode, login, deleteUser, googleSignIn };
+module.exports = {
+  register,
+  sendMailCode,
+  checkUser,
+  resendCode,
+  login,
+  deleteUser,
+  googleSignIn,
+};

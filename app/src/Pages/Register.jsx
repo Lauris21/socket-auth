@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { registerDB } from "../services/API_Chat/user.service";
 import useRegisterError from "../hooks/useRegisterError";
+import { useAuth } from "../context/userContext";
 
 const Register = () => {
+  const { bridgeData } = useAuth();
   const [res, setRes] = useState({});
   const [registerOk, setRegisterOk] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -23,6 +25,7 @@ const Register = () => {
 
   useEffect(() => {
     useRegisterError(res, setRegisterOk);
+    bridgeData("REGISTER_USER");
   }, [res]);
 
   if (registerOk) {

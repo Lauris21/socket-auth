@@ -2,7 +2,7 @@ import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const useRegisterError = (res, setRegisterOk) => {
   if (res?.status == 200) {
-    localStorage.setItem("data", JSON.stringify(res));
+    localStorage.setItem("data", JSON.stringify(res.data));
     setRegisterOk(() => true);
 
     Swal.fire({

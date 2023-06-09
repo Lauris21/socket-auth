@@ -11,6 +11,7 @@ import { UserContextProvider } from "./context/userContext.jsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 import Register from "./Pages/Register.jsx";
 import VerifyCode from "./Pages/VerifyCode.jsx";
+import ProtectedCheck from "./components/ProtectedCheck.jsx";
 
 const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -24,7 +25,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/verifyCode" element={<VerifyCode />} />
+              <Route
+                path="/verifyCode"
+                element={
+                  <ProtectedCheck>
+                    <VerifyCode />
+                  </ProtectedCheck>
+                }
+              />
               <Route
                 path="/dashboard"
                 element={

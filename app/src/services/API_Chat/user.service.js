@@ -17,3 +17,11 @@ export const registerDB = async (data) => {
       return error;
     });
 };
+
+export const checkNewUser = async (data) => {
+  return API_Chat.post("user/checkUser", data)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
