@@ -31,7 +31,7 @@ const Register = () => {
     return <Navigate to="/verifyCode" />;
   }
   return (
-    <div className="w-full max-w-xs flex flex-col gap-10 content-center items-center">
+    <div className="w-screen h-screen flex flex-col gap-10 content-center items-center">
       <h2 className="text-3xl font-semibold">Register</h2>
 
       <form className="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 flex flex-col gap-10">
