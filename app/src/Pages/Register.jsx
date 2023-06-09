@@ -31,11 +31,12 @@ const Register = () => {
     return <Navigate to="/verifyCode" />;
   }
   return (
-    <div className="w-50 d-flex flex-column align-items-center gap-5">
-      <h1>Register</h1>
+    <div className="w-full max-w-xs flex flex-col gap-10 content-center items-center">
+      <h2 className="text-3xl font-semibold">Register</h2>
 
-      <form className="d-flex flex-column gap-3">
+      <form className="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 flex flex-col gap-10">
         <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           id="name"
           placeholder="name"
@@ -43,6 +44,7 @@ const Register = () => {
           onChange={(e) => setData({ ...data, name: e.target.value })}
         />
         <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="email"
           id="email"
           placeholder="email"
@@ -50,6 +52,7 @@ const Register = () => {
           onChange={(e) => setData({ ...data, email: e.target.value })}
         />
         <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           type="password"
           id="password"
           placeholder="password"

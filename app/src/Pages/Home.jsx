@@ -36,37 +36,104 @@ const Home = () => {
   }, [res]);
 
   return (
-    <div className="w-50 h-50 d-flex flex-column align-items-center">
-      {user != null ? (
-        <Navigate to="/dashboard" />
-      ) : mensajeLogin ? (
-        <div className="fix">
-          <h2>Debe Loguearse</h2>
-        </div>
-      ) : (
-        <>
-          <h2 className="text-3xl font-semibold">Google Sign In</h2>
-          <br />
-          <br />
-          <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
-          <br />
-          <br />
-          <div className="flex justify-between">
-            <button
-              className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
-              onClick={() => navigate("/register")}
-            >
-              REGISTER
-            </button>
-            <button
-              className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
-              onClick={() => navigate("/login")}
-            >
-              LOGIN
-            </button>
+    <div className="w-screen h-screen flex flex-col items-center justify-between">
+      <div className="p-24 flex flex-col gap-5 items-center">
+        {user != null ? (
+          <Navigate to="/dashboard" />
+        ) : mensajeLogin ? (
+          <div className="fix">
+            <h2>Debe Loguearse</h2>
           </div>
-        </>
-      )}
+        ) : (
+          <>
+            <h1 className="text-6xl font-semibold">Chat App</h1>
+            <br />
+            <br />
+            <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
+            <br />
+            <br />
+            <div className="w-full flex justify-between">
+              <button
+                className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
+                onClick={() => navigate("/register")}
+              >
+                REGISTER
+              </button>
+              <button
+                className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
+                onClick={() => navigate("/login")}
+              >
+                LOGIN
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="w-screen">
+        <svg width="100%" height="200px" fill="none">
+          <path
+            fill="#454599"
+            d="
+          M0 67
+          C 273,183
+            822,-40
+            1920.00,106 
+
+          V 359 
+          H 0 
+          V 67
+          Z"
+          >
+            <animate
+              repeatCount="indefinite"
+              fill="#454599"
+              attributeName="d"
+              dur="15s"
+              values="
+            M0 77 
+            C 473,283
+              822,-40
+              1920,116 
+
+            V 359 
+            H 0 
+            V 67 
+            Z; 
+
+            M0 77 
+            C 473,-40
+              1222,283
+              1920,136 
+
+            V 359 
+            H 0 
+            V 67 
+            Z; 
+
+            M0 77 
+            C 973,260
+              1722,-53
+              1920,120 
+
+            V 359 
+            H 0 
+            V 67 
+            Z; 
+
+            M0 77 
+            C 473,283
+              822,-40
+              1920,116 
+
+            V 359 
+            H 0 
+            V 67 
+            Z
+            "
+            ></animate>
+          </path>
+        </svg>
+      </div>
     </div>
   );
 };
