@@ -13,6 +13,15 @@ export const UserContextProvider = ({ children }) => {
     } else return null;
   });
 
+  const [allUser, setAllUser] = useState({
+    data: {
+      user: {
+        password: "",
+        email: "",
+      },
+    },
+  });
+
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -33,7 +42,10 @@ export const UserContextProvider = ({ children }) => {
     navigate("/dashboard");
   };
 
-  const value = useMemo(() => ({ user, login, logout }), [user]);
+  const value = useMemo(
+    () => ({ user, login, logout, allUser, setAllUser }),
+    [user, allUser]
+  );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

@@ -25,7 +25,6 @@ const Register = () => {
 
   useEffect(() => {
     useRegisterError(res, setRegisterOk);
-    console.log(res?.data);
   }, [res]);
 
   if (registerOk) {

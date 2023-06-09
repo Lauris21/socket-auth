@@ -45,21 +45,21 @@ const Home = () => {
         </div>
       ) : (
         <>
-          <h2>Google Sign In</h2>
+          <h2 className="text-3xl font-semibold">Google Sign In</h2>
           <br />
           <br />
           <GoogleLogin onSuccess={responseMsg} onError={errorMsg} />
           <br />
           <br />
-          <div className="d-flex justify-content-between w-75">
+          <div className="flex justify-between">
             <button
-              className="btn btn-primary"
+              className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
               onClick={() => navigate("/register")}
             >
               REGISTER
             </button>
             <button
-              className="btn btn-primary"
+              className="bg-indigo-500 hover:bg-indigo-700 text-gray-300 font-bold py-2 px-4 rounded-2xl"
               onClick={() => navigate("/login")}
             >
               LOGIN
