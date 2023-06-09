@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const useRegisterError = (res, setRegisterOk) => {
   if (res?.status == 200) {

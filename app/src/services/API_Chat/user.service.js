@@ -13,5 +13,7 @@ export const googleSignIn = async (token) => {
 export const registerDB = async (data) => {
   return API_Chat.post("user/register", data)
     .then((res) => res)
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      return error;
+    });
 };

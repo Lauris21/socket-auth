@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { registerDB } from "../services/API_Chat/user.service";
 import useRegisterError from "../hooks/useRegisterError";
 
 const Register = () => {
-  const navigate = useNavigate();
-
   const [res, setRes] = useState({});
   const [registerOk, setRegisterOk] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -31,45 +29,61 @@ const Register = () => {
     return <Navigate to="/verifyCode" />;
   }
   return (
-    <div className="w-screen h-screen flex flex-col gap-10 content-center items-center">
-      <h2 className="text-3xl font-semibold">Register</h2>
+    <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
+      <h2 className="text-4xl font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)] mb-8">
+        Register
+      </h2>
 
-      <form className="bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 flex flex-col gap-10">
+      <form className="shadow-md rounded px-8 pt-6 pb-8 flex flex-col gap-4 items-center">
+        <label htmlFor="name"></label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="w-56 shadow appearance-none border rounded py-2 px-3 text-darkGray leading-tight focus:outline-none focus:shadow-outline"
           type="text"
           id="name"
           placeholder="name"
           autoComplete="false"
           onChange={(e) => setData({ ...data, name: e.target.value })}
         />
+        <label htmlFor="email"></label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="w-56 shadow appearance-none border rounded py-2 px-3 text-darkGray leading-tight focus:outline-none focus:shadow-outline"
           type="email"
           id="email"
           placeholder="email"
           autoComplete="false"
           onChange={(e) => setData({ ...data, email: e.target.value })}
         />
+        <label htmlFor="password"></label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="w-56 shadow appearance-none border rounded py-2 px-3 text-darkGray leading-tight focus:outline-none focus:shadow-outline"
           type="password"
           id="password"
           placeholder="password"
           autoComplete="false"
           onChange={(e) => setData({ ...data, password: e.target.value })}
         />
-      </form>
-      <div className="d-flex flex-column gap-3">
         <button
           type="button"
-          className="btn btn-primary"
+          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6"
+          disabled={hidden}
           onClick={(e) => handleSubmit(e)}
         >
           Enviar
         </button>
-        <p>
-          Or <Link to="/login">Login</Link>
+        <p className="bottom-text">
+          <small>
+            By clicking the Sign Up button, you agree to our{" "}
+            <Link className="text-lightBlue">Terms & Conditions</Link> and{" "}
+            <Link className="text-lightBlue">Privacy Policy</Link>.
+          </small>
+        </p>
+      </form>
+      <div className="d-flex flex-column gap-3">
+        <p className="text-sm">
+          Already have an account?{" "}
+          <Link to="/login" className="text-lightBlue text-lg">
+            Login
+          </Link>
         </p>
       </div>
     </div>
