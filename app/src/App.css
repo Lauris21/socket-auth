@@ -16,11 +16,6 @@ body {
     min-width: 100vw;
   }
 
-  .image_profile {
-    max-width: 7rem;
-  }
-  
-
 .fix {
     position: absolute;
     width: 300px;

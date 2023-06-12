@@ -5,15 +5,14 @@ const NavBar = () => {
   return (
     <>
       <header className="p-5 flex flex-column justify-between bg-bgHeader">
-        <div>
-          <img
-            src="https://res.cloudinary.com/dh9z8mk2j/image/upload/v1686589073/logo_wthqig.png"
-            alt="logo Chat App"
-            className="w-12"
-          />
-        </div>
+        <img
+          src="https://res.cloudinary.com/dh9z8mk2j/image/upload/v1686589073/logo_wthqig.png"
+          alt="logo Chat App"
+          className="w-12 h-12 self-center"
+        />
+
         <figure className="flex gap-16 items-center p-2">
-          <h5 className="text-center">{user.user}</h5>
+          <h4 className="text-center">{user.user}</h4>
           <img
             src={user.image}
             alt={`user image by ${user.name}`}
