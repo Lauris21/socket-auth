@@ -9,6 +9,7 @@ export default {
       darkBlue: "#224488",
       lightGray: "#d1d5db",
       darkGray: "#262626",
+      bgHeader: "#21618C26",
     },
   },
   plugins: [],

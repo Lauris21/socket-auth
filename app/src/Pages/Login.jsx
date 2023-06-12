@@ -21,6 +21,7 @@ const Login = () => {
     e.preventDefault();
     setHidden(true);
     setRes(await loginUser(data));
+    setHidden(false);
   };
 
   useEffect(() => {
