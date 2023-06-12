@@ -13,7 +13,7 @@ const useRegisterError = (res, setRegisterOk) => {
     });
   }
 
-  if (res?.response?.status == 409) {
+  if (res?.status == 409) {
     Swal.fire({
       icon: "error",
       title: "Oops.!",
@@ -23,7 +23,7 @@ const useRegisterError = (res, setRegisterOk) => {
     });
   }
 
-  if (res?.response?.status == 500) {
+  if (res?.status == 500) {
     Swal.fire({
       icon: "error",
       title: "Oops.!",

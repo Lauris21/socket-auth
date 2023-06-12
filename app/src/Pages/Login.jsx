@@ -17,12 +17,14 @@ const Login = () => {
   const { userLogin } = useAuth();
 
   const handleSubmit = async (e) => {
+    console.log("entro");
     e.preventDefault();
     setHidden(true);
     setRes(await loginUser(data));
   };
 
   useEffect(() => {
+    console.log(res);
     useLoginError(res, setLoginOk, userLogin);
   }, [res]);
 

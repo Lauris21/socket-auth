@@ -1,7 +1,7 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const useLoginError = (res, setLoginOk, userLogin) => {
-  if (res?.response?.status == 500)
+  if (res?.status == 500)
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -10,7 +10,7 @@ const useLoginError = (res, setLoginOk, userLogin) => {
       timer: 1200,
     });
 
-  if (res?.response?.status == 200) {
+  if (res?.status == 200) {
     const dataCustom = {
       token: res.data.token,
       user: res.data.user.name,
