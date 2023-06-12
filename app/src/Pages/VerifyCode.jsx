@@ -39,7 +39,8 @@ const VerifyCode = () => {
     }
   };
 
-  const handleResendCode = async () => {
+  const handleResendCode = async (e) => {
+    e.preventDefault();
     const userLocal = localStorage.getItem("user");
 
     if (userLocal == null) {
@@ -57,7 +58,6 @@ const VerifyCode = () => {
   };
 
   useEffect(() => {
-    console.log(allUser);
     useVerifyCodeError(res, setDeleteUser, setOkCheck, setUser);
   }, [res]);
 
@@ -104,7 +104,7 @@ const VerifyCode = () => {
           <button
             disabled={hidden}
             className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl"
-            onClick={() => handleResendCode()}
+            onClick={(e) => handleResendCode(e)}
           >
             Resend Code
           </button>

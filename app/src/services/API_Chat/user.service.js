@@ -41,3 +41,11 @@ export const autoLogin = async (data) => {
       return error;
     });
 };
+
+export const loginUser = async (data) => {
+  return API_Chat.post("user/login", data)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
