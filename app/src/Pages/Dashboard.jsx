@@ -1,17 +1,9 @@
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/userContext";
 import NavBar from "../components/NavBar";
 
-// import socketIo from "socket.io-client";
-// const socket = socketIo.connect("http://localhost:8080");
+import socketIo from "socket.io-client";
+const socket = socketIo.connect("http://localhost:8080");
 
 const Dashboard = () => {
-  const { logout, user } = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <>
       <NavBar />
