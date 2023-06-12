@@ -25,3 +25,11 @@ export const checkNewUser = async (data) => {
       return error;
     });
 };
+
+export const resendCode = async (data) => {
+  return API_Chat.post("user/resendCode", data)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};

@@ -24,6 +24,7 @@ const Register = () => {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useRegisterError(res, setRegisterOk);
     bridgeData("REGISTER_USER");
   }, [res]);

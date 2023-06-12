@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
-import { checkNewUser } from "../services/API_Chat/user.service";
+import { checkNewUser, resendCode } from "../services/API_Chat/user.service";
 
 const VerifyCode = () => {
   const { allUser } = useAuth();
@@ -34,7 +34,22 @@ const VerifyCode = () => {
     }
   };
 
-  const handleResendCode = () => {};
+  const handleResendCode = async () => {
+    const userLocal = localStorage.getItem("user");
+
+    if (userLocal == null) {
+      const data = { email: allUser.user?.email };
+      setHidden(true);
+      setResResendCode(await resendCode(data));
+      setHidden(false);
+    } else {
+      const parseUSer = JSON.parse(userLocal);
+      const data = { email: parseUSer.email };
+      setHidden(true);
+      setResResendCode(await resendCode(data));
+      setHidden(false);
+    }
+  };
 
   useEffect(() => {
     console.log(allUser);
@@ -63,8 +78,10 @@ const VerifyCode = () => {
           >
             Verify Code
           </button>
-          <button className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl" 
-            onClick={()=>handleResendCode()}>
+          <button
+            className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl"
+            onClick={() => handleResendCode()}
+          >
             Resend Code
           </button>
         </div>
