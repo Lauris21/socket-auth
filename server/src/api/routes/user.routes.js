@@ -8,6 +8,7 @@ const {
   sendMailCode,
   checkUser,
   resendCode,
+  autoLogin,
 } = require("../controllers/user.controller");
 
 const express = require("express");
@@ -20,6 +21,7 @@ UserRoutes.post("/google", googleSignIn);
 UserRoutes.delete("/delete", [isAuth], deleteUser);
 UserRoutes.post("/checkUser", checkUser);
 UserRoutes.post("/resendCode", resendCode);
+UserRoutes.post("/login/autoLogin", autoLogin);
 
 UserRoutes.post("/sendMailCode/:id", sendMailCode);
 module.exports = { UserRoutes };

@@ -33,3 +33,11 @@ export const resendCode = async (data) => {
       return error;
     });
 };
+
+export const autoLogin = async (data) => {
+  return API_Chat.post("user/login/autoLogin", data)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};

@@ -17,7 +17,7 @@ const useRegisterError = (res, setRegisterOk) => {
     Swal.fire({
       icon: "error",
       title: "Oops.!",
-      text: "User already exist! ❎",
+      text: "User already exist! ❌",
       showConfirmButton: false,
       timer: 1200,
     });
@@ -27,7 +27,7 @@ const useRegisterError = (res, setRegisterOk) => {
     Swal.fire({
       icon: "error",
       title: "Oops.!",
-      text: "Sorry! Internal Server Error ❎",
+      text: "Sorry! Internal Server Error ❌",
       showConfirmButton: false,
       timer: 1200,
     });
@@ -41,7 +41,7 @@ const useRegisterError = (res, setRegisterOk) => {
     Swal.fire({
       icon: "error",
       title: "Oops.!",
-      text: "Sorry! Choose other name ❎",
+      text: "Sorry! Choose other name ❌",
       showConfirmButton: false,
       timer: 1200,
     });
@@ -51,7 +51,7 @@ const useRegisterError = (res, setRegisterOk) => {
     Swal.fire({
       icon: "error",
       title: "Oops.!",
-      text: "Min 8 characters, 1 upper case, 1 lower case and a special character ❎",
+      text: "Min 8 characters, 1 upper case, 1 lower case and a special character ❌",
       showConfirmButton: false,
       timer: 1200,
     });

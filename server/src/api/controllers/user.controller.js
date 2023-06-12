@@ -102,13 +102,13 @@ const sendMailCode = async (req, res, next) => {
 
 const checkUser = async (req, res, next) => {
   try {
-    const { email, confirmatinCode } = req.body;
+    const { email, confirmationCode } = req.body;
     const userDB = await User.findOne({ email });
 
     if (!userDB) {
       return res.status(404).json("User not found");
     } else {
-      if (confirmatinCode === userDB.confirmationCode) {
+      if (confirmationCode === userDB.confirmationCode) {
         try {
           await userDB.updateOne({ check: true });
         } catch (error) {
@@ -126,7 +126,7 @@ const checkUser = async (req, res, next) => {
           userDB,
           check: false,
           delete: (await User.findById(userDB._id))
-            ? "error delete user"
+            ? "Error delete user"
             : "Ok, delete user",
         });
       }
@@ -286,6 +286,30 @@ const googleSignIn = async (req, res, next) => {
   }
 };
 
+const autoLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const userDB = await User.findOne({ email });
+
+    if (userDB) {
+      if ((password, userDB.password)) {
+        const token = generateToken(userDB._id, email);
+        return res.status(200).json({
+          user: userDB,
+          token,
+        });
+      } else {
+        return res.status(404).json("Password don`t match");
+      }
+    } else {
+      return res.status(404).json("User no register");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   register,
   sendMailCode,
@@ -294,4 +318,5 @@ module.exports = {
   login,
   deleteUser,
   googleSignIn,
+  autoLogin,
 };

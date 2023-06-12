@@ -41,6 +41,13 @@ export const UserContextProvider = ({ children }) => {
     localStorage.setItem("user", dataString);
     navigate("/dashboard");
   };
+
+  const userLogin = (data) => {
+    localStorage.setItem("user", data);
+    const parseData = JSON.parse(data);
+    setUser(() => parseData);
+  };
+
   const bridgeData = (state) => {
     const data = localStorage.getItem("data");
     const dataJson = JSON.parse(data);
@@ -56,7 +63,16 @@ export const UserContextProvider = ({ children }) => {
   };
 
   const value = useMemo(
-    () => ({ user, login, logout, allUser, setAllUser, bridgeData }),
+    () => ({
+      user,
+      setUser,
+      login,
+      logout,
+      userLogin,
+      allUser,
+      setAllUser,
+      bridgeData,
+    }),
     [user, allUser]
   );
 

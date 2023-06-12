@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
 import { checkNewUser, resendCode } from "../services/API_Chat/user.service";
+import useVerifyCodeError from "../hooks/useVerifyCodeError";
+import useResendCodeError from "../hooks/useResendCodeError";
+import { Navigate } from "react-router-dom";
+import useAutoLogin from "../hooks/useAutoLogin";
 
 const VerifyCode = () => {
-  const { allUser } = useAuth();
+  const { allUser, setUser, userLogin } = useAuth();
   const [code, setCode] = useState();
   const [res, setRes] = useState({});
   const [resResendCode, setResResendCode] = useState({});
@@ -11,7 +15,8 @@ const VerifyCode = () => {
   const [deleteUser, setDeleteUser] = useState(false);
   const [okCheck, setOkCheck] = useState(false);
 
-  const handleVerify = async (formData) => {
+  const handleVerify = async (formData, e) => {
+    e.preventDefault();
     const userLocal = localStorage.getItem("user");
 
     if (userLocal == null) {
@@ -53,7 +58,24 @@ const VerifyCode = () => {
 
   useEffect(() => {
     console.log(allUser);
-  }, [allUser]);
+    useVerifyCodeError(res, setDeleteUser, setOkCheck, setUser);
+  }, [res]);
+
+  useEffect(() => {
+    useResendCodeError(res);
+  }, [resResendCode]);
+
+  if (deleteUser) {
+    return <Navigate to="/register" />;
+  }
+
+  if (okCheck) {
+    if (!localStorage.getItem("user")) {
+      useAutoLogin(allUser, userLogin);
+    } else {
+      return <Navigate to="/dashboard" />;
+    }
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
@@ -69,16 +91,18 @@ const VerifyCode = () => {
           id="verify"
           name="verify"
           autoComplete="false"
-          onChange={(e) => setCode()}
+          onChange={(e) => setCode(e.target.value)}
         />
         <div className="flex flex-col gap-5">
           <button
+            disabled={hidden}
             className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl"
-            onClick={() => handleVerify(code)}
+            onClick={(e) => handleVerify(code, e)}
           >
             Verify Code
           </button>
           <button
+            disabled={hidden}
             className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl"
             onClick={() => handleResendCode()}
           >
