@@ -237,11 +237,14 @@ const googleSignIn = async (req, res, next) => {
           };
           const newUser = new User(data);
           await newUser.save();
-
-          return res.status(200).json({
-            msg: "User Google create okey 👌🏽",
-            newUser,
-          });
+          if (newUser) {
+            return res.status(200).json({
+              msg: "User Google create okey 👌🏽",
+              newUser,
+            });
+          } else {
+            return res.status(404).json("Error register user");
+          }
         } else {
           const data = {
             name,
@@ -256,10 +259,14 @@ const googleSignIn = async (req, res, next) => {
           const newUser = new User(data);
           await newUser.save();
 
-          return res.status(200).json({
-            msg: "User Google create okey 👌🏽",
-            newUser,
-          });
+          if (newUser) {
+            return res.status(200).json({
+              msg: "User Google create okey 👌🏽",
+              newUser,
+            });
+          } else {
+            return res.status(404).json("Error register user");
+          }
         }
       } else {
         // Si el usuario en DB esta en estado false porque ha sido bloqueado
