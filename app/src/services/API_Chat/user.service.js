@@ -1,4 +1,5 @@
 import { API_Chat } from "./service.config";
+import { updateToken } from "../../utils/updateToken";
 
 export const googleSignIn = async (token) => {
   return API_Chat.post("/user/google", token)
@@ -44,6 +45,18 @@ export const autoLogin = async (data) => {
 
 export const loginUser = async (data) => {
   return API_Chat.post("user/login", data)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const updateTokenUser = async () => {
+  return API_Chat.get("user/", {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
     .then((res) => res)
     .catch((error) => {
       return error;

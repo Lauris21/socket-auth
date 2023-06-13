@@ -29,6 +29,16 @@ const useLoginError = (res, setLoginOk, userLogin) => {
     });
   }
 
+  if (res?.status == 401) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops.!",
+      text: `${res.response.data.msg}`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
   if (res?.response?.data?.includes("Password dont match"))
     Swal.fire({
       icon: "error",

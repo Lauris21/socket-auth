@@ -180,6 +180,11 @@ const login = async (req, res, next) => {
     const userDB = await User.findOne({ email });
 
     if (userDB) {
+      if (!userDB.estado) {
+        return res.status(401).json({
+          msg: "Contact with the administration, user already bloqued",
+        });
+      }
       if (bcrypt.compareSync(password, userDB.password)) {
         const token = generateToken(userDB._id, email);
         return res.status(200).json({

@@ -25,7 +25,6 @@ const Login = () => {
   };
 
   useEffect(() => {
-    console.log(res);
     useLoginError(res, setLoginOk, userLogin);
   }, [res]);
 
