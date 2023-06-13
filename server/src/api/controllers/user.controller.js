@@ -314,6 +314,18 @@ const autoLogin = async (req, res, next) => {
   }
 };
 
+const tokenRenovate = async (req, res, next) => {
+  try {
+    const { user } = req;
+
+    const token = generateToken(user._id, user.email);
+
+    return res.json({ user, token });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   register,
   sendMailCode,
@@ -323,4 +335,5 @@ module.exports = {
   deleteUser,
   googleSignIn,
   autoLogin,
+  tokenRenovate,
 };
