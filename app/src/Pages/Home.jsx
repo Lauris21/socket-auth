@@ -24,7 +24,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(res);
     useGoogleSignInError(res, setIsLogin);
   }, [res]);
 
