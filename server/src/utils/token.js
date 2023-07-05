@@ -24,10 +24,17 @@ const verifySocketToken = async (token) => {
       const user = await User.findById(id);
 
       if (!user) {
-        return res.status(401).json({
+        return res.status(404).json({
           msg: "Token not valid - User not found in db",
         });
       }
+
+      if (!user.estado) {
+        return es.status(401).json({
+          msg: "User is blocked - Contact with admin",
+        });
+      }
+      return user;
     } else {
       return res.status(401).json({
         msg: "No hay token en la petición",

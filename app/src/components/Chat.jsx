@@ -12,9 +12,9 @@ const Chat = ({ res }) => {
   //       "x-token": res.token,
   //     },
   //   });
-  //   useEffect(() => {
-  //     console.log(socketConnect);
-  //   }, []);
+  useEffect(() => {
+    console.log(res.user);
+  }, [res]);
 
   return (
     <div>
