@@ -42,7 +42,7 @@ const io = require("socket.io")(server, {
   },
 });
 
-io.on("connection", socketController);
+io.on("connection", (socket) => socketController(socket, io));
 
 // io.on("connection", (socket) => {
 //   console.log(`⚡️ ${socket.id} user just connected!`);

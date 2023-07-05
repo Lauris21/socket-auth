@@ -9,30 +9,31 @@ const Chat = ({ res }) => {
     },
   });
 
+  const drawUsers = (users = []) => {
+    console.log(users);
+    // if (users !== []) {
+    //   users.forEach((user) => console.log("user", user));
+    // }
+  };
+
   socketConnect.on("connect", () => {
     console.log("Socket online");
   });
 
   socketConnect.on("disconnect", () => {
-    console.log("Socket offline");
+    console.log("Socket offline 💥");
   });
 
   socketConnect.on("send-message", () => {
     console.log("Socket online");
   });
 
-  socketConnect.on("active-users", () => {
-    console.log("Socket online");
-  });
+  socketConnect.on("active-users", drawUsers);
 
   socketConnect.on("private-message", () => {
     console.log("Socket online");
   });
-  //   socketConnect = socketIo({
-  //     extraHeaders: {
-  //       "x-token": res.token,
-  //     },
-  //   });
+
   useEffect(() => {
     console.log(res.user);
   }, [res]);
