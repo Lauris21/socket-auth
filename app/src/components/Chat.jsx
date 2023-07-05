@@ -16,7 +16,11 @@ const Chat = ({ res }) => {
   //     console.log(socketConnect);
   //   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      <h3>{res.user.name}</h3>
+    </div>
+  );
 };
 
 export default Chat;

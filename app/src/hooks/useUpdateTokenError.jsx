@@ -12,6 +12,8 @@ const useUpdateTokenError = (res, setResOk) => {
 
   if (res?.status == 200) {
     setResOk(() => true);
+    // const { user, token } = res.data;
+    // console.log(user, token);
   }
 };
 
