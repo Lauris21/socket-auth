@@ -3,49 +3,44 @@ import socketIo from "socket.io-client";
 import ChatBar from "./ChatBar";
 
 const Chat = ({ res }) => {
-  const socketConnect = socketIo.connect("http://localhost:8080", {
-    extraHeaders: {
-      "x-token": res.token,
-    },
-  });
-
+  const [socket, setSocket] = useState(null);
   const user = res.user;
 
-  // const drawUsers = (users = []) => {
-  //   console.log("USEEEEERRRR", users);
-  //   // if (users !== []) {
-  //   //   users.forEach((user) => console.log("user", user));
-  //   // }
-  // };
+  useEffect(() => {
+    const socketConnect = socketIo.connect("http://localhost:8080", {
+      extraHeaders: {
+        "x-token": res.token,
+      },
+    });
 
-  socketConnect.on("connect", () => {
-    console.log("Socket online");
-  });
+    socketConnect.on("connect", () => {
+      console.log("Socket online"),
+        socketConnect.emit("New-User", { user, socketId: socketConnect.id });
+    });
 
-  socketConnect.on("disconnect", () => {
-    console.log("Socket offline 💥");
-  });
+    socketConnect.on("disconnect", () => {
+      console.log("Socket offline 💥");
+    });
 
-  socketConnect.emit("New-User", { user, socketId: socketConnect.id });
+    socketConnect.on("send-message", () => {
+      console.log("Socket online");
+    });
 
-  socketConnect.on("send-message", () => {
-    console.log("Socket online");
-  });
+    socketConnect.on("private-message", () => {
+      console.log("Socket online");
+    });
 
-  // socketConnect.on("active-users", drawUsers);
+    setSocket(socketConnect);
 
-  socketConnect.on("private-message", () => {
-    console.log("Socket online");
-  });
-
-  // useEffect(() => {
-  //   console.log("USEER REEEESSSS", res.user);
-  // }, [res]);
+    return () => {
+      socketConnect.close();
+    };
+  }, [res, user]);
 
   return (
     <div>
       {/* <h3>{res.user.name}</h3> */}
-      <ChatBar socket={socketConnect} />
+      <ChatBar socket={socket} />
       <h3>Enviar mensaje</h3>
       <input type="text" id="textId" autoComplete="off" />
       <input

@@ -4,14 +4,18 @@ const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    socket.on("active-users", (data) => {
-      setUsers(data), console.log("DAAAAATTAAAAAA", data);
-    });
-  }, [socket, users]);
+    socket &&
+      socket.on("active-users", (data) => {
+        console.log("DAATAaFAAKE", data);
+        setUsers(data);
+      });
 
-  useEffect(() => {
-    console.log("UUUUUUUUUUUUUUUUUUUUUUUU", users);
-  }, [users]);
+    // socket.on("disconnect-user", (data) => {
+    //   setUsers(data), console.log("DAAAAATTAAAAAA", data);
+    // });
+  }, [socket]);
+
+  //   useEffect(() => {}, [socket, users]);
 
   return (
     <div>

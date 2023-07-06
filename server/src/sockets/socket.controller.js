@@ -7,31 +7,38 @@ const {
 const { verifySocketToken } = require("../utils/token");
 
 const socketController = async (socket, io) => {
-  const token = socket.handshake.headers["x-token"];
+  try {
+    const token = socket.handshake.headers["x-token"];
 
-  const user = await verifySocketToken(token);
+    const user = await verifySocketToken(token);
 
-  if (!user) {
-    return socket.disconnect();
+    if (!user) {
+      return socket.disconnect();
+    }
+
+    const chat = createChatMessage();
+
+    //Gestionamos conexion de usuarios
+    socket.on("New-User", (data) => {
+      pushUsers(data);
+      const users = getterUsers();
+      console.log("UUUSEEEERRRR IIINNNNNN", users);
+      io.emit("active-users", users);
+    });
+
+    //Limpiar cuando alguien se desconecta
+    socket.on("disconnect", () => {
+      // deleteUser(user);
+      // const users = getterUsers();
+      // console.log("UUUSSSEEERRRSSSSSS", users);
+      // io.emit("disconnect-user", users);
+      console.log("A user disconnected 💥");
+    });
+
+    console.log(`⚡️ ${socket.id} user just connected! 🎃`);
+  } catch (error) {
+    console.error("Error during socket connection", error);
   }
-
-  const chat = createChatMessage();
-
-  //Gestionamos conexion de usuarios
-  socket.on("New-User", (data) => {
-    pushUsers(data);
-    const users = getterUsers();
-    console.log("DAAATAAAAFAAKEEEE", users);
-    io.emit("active-users", users);
-  });
-
-  //Limpiar cuando alguien se desconecta
-  socket.on("disconnect", () => {
-    deleteUser(user);
-    console.log("A user disconnected 💥");
-  });
-
-  console.log(`⚡️ ${socket.id} user just connected! 🎃`);
 };
 
 module.exports = { socketController };
