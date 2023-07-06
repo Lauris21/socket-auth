@@ -18,7 +18,9 @@ const pushUsers = (data) => {
 };
 
 const deleteUser = (data) => {
+  console.log(data);
   users = users.filter((user) => user.user.email !== data.email);
+  console.log(users);
 };
 
 let messages = [];

@@ -4,7 +4,9 @@ const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    socket.on("active-users", (data) => setUsers(data));
+    socket.on("active-users", (data) => {
+      setUsers(data), console.log("DAAAAATTAAAAAA", data);
+    });
   }, [socket, users]);
 
   useEffect(() => {
@@ -17,9 +19,8 @@ const ChatBar = ({ socket }) => {
       <div>
         <h4>Active User</h4>
         <div>
-          {users.map((user) => (
-            <p key={user.user._id}>{user.user.name}</p>
-          ))}
+          {users &&
+            users.map((user) => <p key={user.user._id}>{user.user.name}</p>)}
         </div>
       </div>
     </div>
