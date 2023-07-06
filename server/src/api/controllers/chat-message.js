@@ -6,15 +6,35 @@ const createMessage = (id, name, message) => {
   };
 };
 
-const createChatMessage = () => {
-  const messages = [];
-  const users = {};
+let messages = [];
+let users = [];
 
+const getterUsers = () => {
+  return users;
+};
+
+const setterUsers = (data) => {
+  users = data;
+};
+
+const pushUsers = (data) => {
+  const findUser = users.some((user) => user?.user?.email == data.user.email);
+  console.log("UUUSSSEEEEEERRRRRRSSSSSS", users);
+  console.log("DAAATAAAAAA", data);
+  console.log("Usuario encontrado", findUser);
+  if (!findUser) {
+    users.push(data);
+    console.log("entro", users);
+  }
+};
+
+const createChatMessage = () => {
   const last10Messages = () => {
     return messages.slice(0, 10);
   };
 
   const usersArray = () => {
+    // console.log("Useeerrrrrrrrrs", Object.values(users));
     return Object.values(users);
   };
 
@@ -39,4 +59,4 @@ const createChatMessage = () => {
   };
 };
 
-module.exports = createChatMessage;
+module.exports = { createChatMessage, getterUsers, setterUsers, pushUsers };
