@@ -1,12 +1,4 @@
-const createMessage = (id, name, message) => {
-  return {
-    id: id,
-    name: name,
-    message: message,
-  };
-};
-
-let messages = [];
+// Gestionamos usuarios conectados
 let users = [];
 
 const getterUsers = () => {
@@ -19,13 +11,24 @@ const setterUsers = (data) => {
 
 const pushUsers = (data) => {
   const findUser = users.some((user) => user?.user?.email == data.user.email);
-  console.log("UUUSSSEEEEEERRRRRRSSSSSS", users);
-  console.log("DAAATAAAAAA", data);
-  console.log("Usuario encontrado", findUser);
+
   if (!findUser) {
     users.push(data);
-    console.log("entro", users);
   }
+};
+
+const deleteUser = (data) => {
+  users = users.filter((user) => user.user.email !== data.email);
+};
+
+let messages = [];
+
+const createMessage = (id, name, message) => {
+  return {
+    id: id,
+    name: name,
+    message: message,
+  };
 };
 
 const createChatMessage = () => {
@@ -59,4 +62,10 @@ const createChatMessage = () => {
   };
 };
 
-module.exports = { createChatMessage, getterUsers, setterUsers, pushUsers };
+module.exports = {
+  createChatMessage,
+  getterUsers,
+  setterUsers,
+  pushUsers,
+  deleteUser,
+};

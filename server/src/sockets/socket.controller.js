@@ -1,7 +1,7 @@
 const {
   createChatMessage,
   getterUsers,
-  setterUsers,
+  deleteUser,
   pushUsers,
 } = require("../api/controllers/chat-message");
 const { verifySocketToken } = require("../utils/token");
@@ -17,10 +17,7 @@ const socketController = async (socket, io) => {
 
   const chat = createChatMessage();
 
-  //Agrega al usuario conectado
-  // chat.userConnect(user);
-  // const arrayUsers = chat.usersArray();
-
+  //Gestionamos conexion de usuarios
   socket.on("New-User", (data) => {
     pushUsers(data);
     io.emit("active-users", getterUsers());
@@ -28,14 +25,11 @@ const socketController = async (socket, io) => {
 
   //Limpiar cuando alguien se desconecta
   socket.on("disconnect", () => {
-    chat.userDisconnect(user.id);
+    deleteUser(user);
+    console.log("A user disconnected 💥");
   });
 
   console.log(`⚡️ ${socket.id} user just connected! 🎃`);
-
-  socket.on("disconnect", () => {
-    console.log("A user disconnected 💥");
-  });
 };
 
 module.exports = { socketController };
