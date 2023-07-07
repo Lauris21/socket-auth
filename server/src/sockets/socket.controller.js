@@ -16,13 +16,13 @@ const socketController = async (socket, io) => {
       return socket.disconnect();
     }
 
-    const chat = createChatMessage();
+    // const chat = createChatMessage();
 
     //Gestionamos conexion de usuarios
     socket.on("New-User", (data) => {
       pushUsers(data);
+      console.log("DAAATAA", data);
       const users = getterUsers();
-      console.log("UUUSEEEERRRR IIINNNNNN", users);
       io.emit("active-users", users);
     });
 

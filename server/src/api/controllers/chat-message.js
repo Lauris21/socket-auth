@@ -10,7 +10,7 @@ const setterUsers = (data) => {
 };
 
 const pushUsers = (data) => {
-  const findUser = users.some((user) => user?.user?.email == data.user.email);
+  const findUser = users.some((user) => user?.user?.email == data?.user?.email);
 
   if (!findUser) {
     users.push(data);
@@ -18,7 +18,9 @@ const pushUsers = (data) => {
 };
 
 const deleteUser = (data) => {
-  users = users.filter((user) => user.user.email !== data.email);
+  users.map((user) => console.log(user));
+  //   users = users.filter((user) => user.user.email !== data.email);
+  //   console.log("UUSEER DELETINGGG", users);
 };
 
 let messages = [];

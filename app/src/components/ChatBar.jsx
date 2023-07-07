@@ -13,8 +13,14 @@ const ChatBar = ({ socket }) => {
     // socket.on("disconnect-user", (data) => {
     //   setUsers(data), console.log("DAAAAATTAAAAAA", data);
     // });
-  }, [socket]);
+  }, [socket, users]);
 
+  //   const active = async () => {
+  //     socket.on("active-users", (data) => {
+  //         console.log("DAATAaFAAKE", data);
+  //         setUsers(data);
+  //       });
+  //   }
   //   useEffect(() => {}, [socket, users]);
 
   return (
