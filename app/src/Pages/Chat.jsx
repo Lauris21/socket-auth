@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 
 import ChatBar from "../components/ChatBar";
+import NavBar from "../components/NavBar";
+import { useNavigate } from "react-router-dom";
 
 const Chat = ({ socket }) => {
+  const navigate = useNavigate();
   // const [socket, setSocket] = useState(null);
   // const user = res.user;
 
@@ -43,7 +46,9 @@ const Chat = ({ socket }) => {
   //   console.log("entro");
   // };
   return (
-    <div>
+    <>
+      <NavBar />
+      <button onClick={() => navigate("/dashboard")}>Go to Dashboard</button>
       {/* <h3>{res.user.name}</h3> */}
       {/* <ChatBar socket={socket} /> */}
       <h3>Enviar mensaje</h3>
@@ -54,7 +59,7 @@ const Chat = ({ socket }) => {
         autoComplete="off"
         placeholder="message"
       />
-    </div>
+    </>
   );
 };
 

@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import Chat from "./Chat";
 import NavBar from "../components/NavBar";
 
 import useUpdateTokenError from "../hooks/useUpdateTokenError";
 import { updateTokenUser } from "../services/API_Chat/user.service";
 import { useSocket } from "../hooks/useSocket";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [res, setRes] = useState(null);
   const [resOk, setResOk] = useState(false);
   // const [socket, setSocket] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +41,8 @@ const Dashboard = () => {
       <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
         <div className="d-flex flex-column align-items-center gap-5">
           {/* <h3> Hello 👋🏽 ! Here YOUR Profile</h3> */}
-          {resOk && <Chat socket={socket} />}
+          {/* {resOk && <Chat socket={socket} />} */}
+          <button onClick={() => navigate("/chat")}>Go to chat</button>
         </div>
       </div>
     </>
