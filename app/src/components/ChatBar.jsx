@@ -27,10 +27,10 @@ const ChatBar = ({ socket }) => {
     <div>
       <h2>Open chat</h2>
       <div>
-        <h4>Active User</h4>
+        <h4>Active User </h4>
         <div>
           {users &&
-            users.map((user) => <p key={user.user._id}>{user.user.name}</p>)}
+            users.map((user) => <p key={user.user._id}>{`🟢 ${user.user.name}`}</p>)}
         </div>
       </div>
     </div>
