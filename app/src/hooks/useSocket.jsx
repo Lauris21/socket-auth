@@ -9,6 +9,7 @@ export const useSocket = (url, token, userData, resOk) => {
         extraHeaders: {
           "x-token": token,
         },
+        autoConnect: false
       });
 
       socketConnect.on("connect", () => {
