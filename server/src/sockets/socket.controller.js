@@ -35,10 +35,14 @@ const socketController = async (socket, io) => {
     });
 
     //Limpiar cuando alguien se desconecta
-    socket.on("disconnect", () => {
+    socket.on("disconnect-user", () => {
       deleteUser(user);
       const users = getterUsers();
-      io.emit("disconnect-user", users);
+      io.emit("disconnected-user", users);
+      console.log("A user disconnected 💥");
+    });
+
+    socket.on("disconnect", () => {
       console.log("A user disconnected 💥");
     });
 

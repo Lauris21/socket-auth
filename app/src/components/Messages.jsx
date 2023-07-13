@@ -8,7 +8,10 @@ const Messages = ({ messages }) => {
     <>
       {messages.map((message, i) => (
         <div key={i}>
-          <p>{message.message}</p>
+          <p>
+            <span>{message.name}</span>
+            {message.message}
+          </p>
         </div>
       ))}
     </>

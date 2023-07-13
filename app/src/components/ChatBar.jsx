@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 
-const ChatBar = ({ socket }) => {
+const ChatBar = ({ socket, connect }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     socket.on("active-users", (data) => {
       setUsers(data);
     });
+  }, [socket, users]);
 
-    socket.on("disconnect-user", (data) => {
+  useEffect(() => {
+    socket.on("disconnected-user", (data) => {
       setUsers(data);
     });
-  }, [socket, users]);
+  }, [connect]);
 
   return (
     <div>

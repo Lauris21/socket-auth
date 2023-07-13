@@ -41,15 +41,20 @@ const Chat = ({ res }) => {
     setConnect(true);
   };
 
+  const handleDisconnect = () => {
+    setConnect(false);
+    socket.emit("disconnect-user");
+  };
+
   return (
     <>
       {connect ? (
         <div className="flex flex-col justify-around md:grid md:grid-cols-2 min-h-[calc(100vh-96px)]">
-          <ChatBar socket={socket} />
+          <ChatBar socket={socket} connect={connect} />
           <ChatBody socket={socket} />
           <button
             className="md:absolute md:bottom-8 md:left-8 bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
-            onClick={() => setConnect(false)}
+            onClick={handleDisconnect}
           >
             Disconnect
           </button>
