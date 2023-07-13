@@ -23,19 +23,16 @@ const socketController = async (socket, io) => {
     // })
     //Gestionamos conexion de usuarios
     socket.on("New-User", (data) => {
-      console.log("DAAATAA", data);
       pushUsers(data);
-      console.log("DAAATAA", data);
       const users = getterUsers();
       io.emit("active-users", users);
     });
 
     //Limpiar cuando alguien se desconecta
     socket.on("disconnect", () => {
-      // deleteUser(user);
-      // const users = getterUsers();
-      // console.log("UUUSSSEEERRRSSSSSS", users);
-      // io.emit("disconnect-user", users);
+      deleteUser(user);
+      const users = getterUsers();
+      io.emit("disconnect-user", users);
       console.log("A user disconnected 💥");
     });
 

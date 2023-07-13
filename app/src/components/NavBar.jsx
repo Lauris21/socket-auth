@@ -12,7 +12,6 @@ const NavBar = () => {
         />
 
         <figure className="flex gap-16 items-center p-2">
-          <h4 className="text-center">{user.user}</h4>
           <img
             src={user.image}
             alt={`user image by ${user.name}`}

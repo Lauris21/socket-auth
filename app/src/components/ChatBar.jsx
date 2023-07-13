@@ -9,9 +9,9 @@ const ChatBar = ({ socket }) => {
         setUsers(data);
       });
 
-    // socket.on("disconnect-user", (data) => {
-    //   setUsers(data), console.log("DAAAAATTAAAAAA", data);
-    // });
+    socket.on("disconnect-user", (data) => {
+      setUsers(data), console.log("DAAAAATTAAAAAA", data);
+    });
   }, [socket, users]);
 
   //   const active = async () => {

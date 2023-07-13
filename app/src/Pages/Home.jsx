@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-between">
-      <div className="p-24 flex flex-col gap-5 items-center">
+      <div className="p-24 flex flex-col gap-5 items-center md:mt-28">
         <h1 className="text-6xl font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)]">
           Chat App
         </h1>
