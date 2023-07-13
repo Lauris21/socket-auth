@@ -16,6 +16,7 @@ const Home = () => {
 
   const responseMsg = async (codeResponse) => {
     const token_id = { token_id: codeResponse.credential };
+    
     setRes(await googleSignIn(JSON.stringify(token_id)));
   };
 

@@ -4,7 +4,6 @@ const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    socket &&
       socket.on("active-users", (data) => {
         console.log("DAATAaFAAKE", data);
         setUsers(data);

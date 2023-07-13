@@ -12,7 +12,6 @@ import ProtectedRoutes from "./components/ProtectedRoutes.jsx";
 import Register from "./Pages/Register.jsx";
 import VerifyCode from "./Pages/VerifyCode.jsx";
 import ProtectedCheck from "./components/ProtectedCheck.jsx";
-import Chat from "./Pages/Chat";
 
 const client_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -42,14 +41,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                   </ProtectedRoutes>
                 }
               />
-              <Route
-                path="/chat"
-                element={
-                  <ProtectedRoutes>
-                    <Chat />
-                  </ProtectedRoutes>
-                }
-              />
+              
             </Route>
           </Routes>
         </UserContextProvider>

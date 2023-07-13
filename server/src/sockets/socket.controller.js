@@ -18,8 +18,12 @@ const socketController = async (socket, io) => {
 
     // const chat = createChatMessage();
 
+    // socket.on("connect", (socket) => {
+    //   console.log("IIDD", socket);
+    // })
     //Gestionamos conexion de usuarios
     socket.on("New-User", (data) => {
+      console.log("DAAATAA", data);
       pushUsers(data);
       console.log("DAAATAA", data);
       const users = getterUsers();

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
-
+import Chat from "../components/Chat";
 import useUpdateTokenError from "../hooks/useUpdateTokenError";
 import { updateTokenUser } from "../services/API_Chat/user.service";
-import { useSocket } from "../hooks/useSocket";
+//import { useSocket } from "../hooks/useSocket";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -25,15 +25,19 @@ const Dashboard = () => {
   useEffect(() => {
     useUpdateTokenError(res, setResOk);
   }, [res]);
-  let socket;
-  useEffect(() => {
-    socket = useSocket(
-      "http://localhost:8080",
-      res?.data?.token,
-      res?.data?.user,
-      resOk
-    );
-  }, [resOk, res]);
+
+  // let socket;
+  // useEffect(() => {
+  //   socket = useSocket(
+  //     "http://localhost:8080",
+  //     res?.data?.token,
+  //     res?.data?.user,
+  //     resOk
+  //   );
+  // }, [resOk, res]);
+
+  // useEffect(() => {
+  // }, [resOk, res]);
 
   return (
     <>
@@ -41,8 +45,7 @@ const Dashboard = () => {
       <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
         <div className="d-flex flex-column align-items-center gap-5">
           {/* <h3> Hello 👋🏽 ! Here YOUR Profile</h3> */}
-          {/* {resOk && <Chat socket={socket} />} */}
-          <button onClick={() => navigate("/chat")}>Go to chat</button>
+          {resOk && <Chat res={res.data} />}
         </div>
       </div>
     </>
