@@ -42,8 +42,8 @@ const Dashboard = () => {
   return (
     <>
       <NavBar />
-      <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
-        <div className="d-flex flex-column align-items-center gap-5">
+      <div className="w-screen min-h-[calc(100vh-96px)] flex flex-col gap-8 justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-5">
           {/* <h3> Hello 👋🏽 ! Here YOUR Profile</h3> */}
           {resOk && <Chat res={res.data} />}
         </div>
