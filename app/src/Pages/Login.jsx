@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../context/userContext";
 import { loginUser } from "../services/API_Chat/user.service";
 import useLoginError from "../hooks/useLoginError";
+import AnimationHome from "../components/UI/AnimationHome";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -37,8 +38,9 @@ const Login = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex flex-col gap-8 justify-center items-center">
-      <h1 className="text-4xl font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)] mb-8">
+    <div className="w-screen h-screen flex flex-col justify-between items-center">
+    <div className="mt-20 md:mt-40">
+      <h1 className="text-4xl text-center font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)] lg:mb-12 lg:text-6xl">
         Login
       </h1>
 
@@ -62,11 +64,11 @@ const Login = () => {
           onChange={(e) => setData({ ...data, password: e.target.value })}
         />
       </form>
-      <div className="d-flex flex-column gap-3">
+      <div className="flex flex-col gap-3 justify-center">
         <button
           disabled={hidden}
           type="button"
-          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6"
+          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
           onClick={(e) => handleSubmit(e)}
         >
           Enviar
@@ -78,6 +80,8 @@ const Login = () => {
           </Link>
         </p>
       </div>
+    </div>
+    <AnimationHome />
     </div>
   );
 };

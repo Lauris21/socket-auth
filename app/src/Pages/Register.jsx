@@ -73,7 +73,7 @@ const Register = () => {
         />
         <button
           type="button"
-          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6"
+          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56"
           disabled={hidden}
           onClick={(e) => handleSubmit(e)}
         >
