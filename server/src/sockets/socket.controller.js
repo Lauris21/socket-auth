@@ -18,8 +18,6 @@ const socketController = async (socket, io) => {
       return socket.disconnect();
     }
 
-    // const chat = createChatMessage();
-
     //Gestionamos conexion de usuarios
     socket.on("New-User", (data) => {
       pushUsers(data);
@@ -39,7 +37,6 @@ const socketController = async (socket, io) => {
       deleteUser(user);
       const users = getterUsers();
       io.emit("disconnected-user", users);
-      console.log("A user disconnected 💥");
     });
 
     socket.on("disconnect", () => {
@@ -48,7 +45,7 @@ const socketController = async (socket, io) => {
 
     console.log(`⚡️ ${socket.id} user just connected! 🎃`);
   } catch (error) {
-    console.error("Error during socket connection", error);
+    console.error("Error while socket try connection", error);
   }
 };
 

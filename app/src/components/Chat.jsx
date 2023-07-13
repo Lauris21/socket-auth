@@ -49,7 +49,7 @@ const Chat = ({ res }) => {
   return (
     <>
       {connect ? (
-        <div className="flex flex-col justify-around md:grid md:grid-cols-2 min-h-[calc(100vh-96px)]">
+        <div className="flex flex-col justify-around md:grid md:grid-cols-2 md:p-8 w-full min-h-[calc(100vh-96px)]">
           <ChatBar socket={socket} connect={connect} />
           <ChatBody socket={socket} />
           <button
