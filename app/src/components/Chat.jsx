@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import socketIo from "socket.io-client";
 import ChatBar from "./ChatBar";
 import AnimationHome from "./UI/AnimationHome";
+import ChatBody from "./ChatBody";
 
 const Chat = ({ res }) => {
   const [socket, setSocket] = useState(null);
-  const [message, setMessage] = useState("");
   const user = res.user;
   const [connect, setConnect] = useState(false);
 
@@ -25,10 +25,6 @@ const Chat = ({ res }) => {
       console.log("Socket offline 💥");
     });
 
-    // socketConnect.on("send-message", () => {
-    //   console.log("Socket online");
-    // });
-
     // socketConnect.on("private-message", () => {
     //   console.log("Socket online");
     // });
@@ -45,54 +41,34 @@ const Chat = ({ res }) => {
     setConnect(true);
   };
 
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    console.log(message);
-    socket.emit("message", message);
-    setMessage("");
-  };
-
   return (
     <>
       {connect ? (
-        <div>
+        <div className="flex flex-col justify-around md:grid md:grid-cols-2 min-h-[calc(100vh-96px)]">
           <ChatBar socket={socket} />
-          <h3>Enviar mensaje</h3>
-          <form onSubmit={(e) => handleSumbit(e)}>
-            {/* <input type="text" id="textId" autoComplete="off" /> */}
-            <input
-              type="text"
-              id="text-message"
-              autoComplete="off"
-              placeholder="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <button>Send</button>
-          </form>
+          <ChatBody socket={socket} />
           <button
-            className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
+            className="md:absolute md:bottom-8 md:left-8 bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
             onClick={() => setConnect(false)}
           >
-            Desconectar
+            Disconnect
           </button>
         </div>
       ) : (
         <div className="min-h-[calc(100vh-96px)] flex flex-col justify-between items-center">
-        <div className="w-[90%] flex flex-col self-align-center mt-52 md:gap-20">
-          <h3 className="text-4xl font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)] text-center leading-[4.5rem]">
-            Wellcome {res.user.name}{" "}
-            <span className="animate-wavingHand ">👋🏽</span>
-          </h3>
-          <button
-            className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
-            onClick={handleClick}
-          >
-            Conectar
-          </button>
+          <div className="w-[90%] flex flex-col self-align-center mt-20 md:mt-52 gap-8 md:gap-20">
+            <h3 className="text-4xl font-semibold drop-shadow-[11px_-3px_4px_rgba(0,180,219,0.28)] text-center leading-[4.5rem]">
+              Wellcome {res.user.name}{" "}
+              <span className="animate-wavingHand ">👋🏽</span>
+            </h3>
+            <button
+              className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
+              onClick={handleClick}
+            >
+              Connect
+            </button>
           </div>
           <AnimationHome />
-       
         </div>
       )}
     </>

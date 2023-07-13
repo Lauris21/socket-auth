@@ -18,11 +18,14 @@ const pushUsers = (data) => {
 };
 
 const deleteUser = (data) => {
-    users = users.filter((user) => user.user.email !== data.email);
-    console.log("UUSEER DELETINGGG", users);
+  users = users.filter((user) => user.user.email !== data.email);
 };
 
 let messages = [];
+
+const getterMessage = () => {
+  return messages;
+};
 
 const createMessage = (id, name, message) => {
   return {
@@ -32,41 +35,26 @@ const createMessage = (id, name, message) => {
   };
 };
 
-const createChatMessage = () => {
-  const last10Messages = () => {
-    return messages.slice(0, 10);
-  };
+const last10Messages = () => {
+  return messages.slice(0, 10);
+};
 
-  const usersArray = () => {
-    // console.log("Useeerrrrrrrrrs", Object.values(users));
-    return Object.values(users);
-  };
+// const usersArray = () => {
+//   console.log("Useeerrrrrrrrrs", Object.values(users));
+//   return Object.values(users);
+// };
 
-  const sendMessage = (id, name, message) => {
-    messages.unshift(createMessage(id, name, message));
-  };
-
-  const userConnect = (user) => {
-    users[user.id] = user;
-  };
-
-  const userDisconnect = (id) => {
-    delete users[id];
-  };
-
-  return {
-    last10Messages,
-    usersArray,
-    sendMessage,
-    userConnect,
-    userDisconnect,
-  };
+const sendMessage = (id, name, message) => {
+  messages.unshift(createMessage(id, name, message));
 };
 
 module.exports = {
-  createChatMessage,
   getterUsers,
   setterUsers,
   pushUsers,
   deleteUser,
+  getterMessage,
+  createMessage,
+  last10Messages,
+  sendMessage,
 };

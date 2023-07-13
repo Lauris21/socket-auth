@@ -3,6 +3,8 @@ const {
   getterUsers,
   deleteUser,
   pushUsers,
+  sendMessage,
+  last10Messages,
 } = require("../api/controllers/chat-message");
 const { verifySocketToken } = require("../utils/token");
 
@@ -18,14 +20,18 @@ const socketController = async (socket, io) => {
 
     // const chat = createChatMessage();
 
-    // socket.on("connect", (socket) => {
-    //   console.log("IIDD", socket);
-    // })
     //Gestionamos conexion de usuarios
     socket.on("New-User", (data) => {
       pushUsers(data);
       const users = getterUsers();
       io.emit("active-users", users);
+    });
+
+    //Recibimos emisión de mensaje
+    socket.on("send-message", ({ id, message }) => {
+      sendMessage(user._id, user.name, message);
+      //Emitimos mensaje
+      io.emit("get-message", last10Messages());
     });
 
     //Limpiar cuando alguien se desconecta
