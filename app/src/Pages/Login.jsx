@@ -71,7 +71,7 @@ const Login = () => {
           className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"
           onClick={(e) => handleSubmit(e)}
         >
-          Enviar
+          Send
         </button>
         <p className="text-sm text-center">
           Or{" "}
