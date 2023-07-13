@@ -73,12 +73,17 @@ const Login = () => {
         >
           Send
         </button>
-        <p className="text-sm text-center">
-          Or{" "}
+        <div className="flex justify-evenly">
+        <Link to="/" className="text-lightBlue text-lg">
+            Google Sign In
+          </Link>
+          <p className="text-sm place-self-center" >
+          Or
+          </p>
           <Link to="/register" className="text-lightBlue text-lg">
             Register
           </Link>
-        </p>
+        </div>
       </div>
     </div>
     <AnimationHome />
