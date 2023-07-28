@@ -28,7 +28,7 @@ const ChatBody = ({ socket }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between col-span-2">
       {messages && <Messages messages={messages} />}
       <form onSubmit={(e) => handleSumbit(e)}>
         <input

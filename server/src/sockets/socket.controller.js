@@ -25,11 +25,18 @@ const socketController = async (socket, io) => {
       io.emit("active-users", users);
     });
 
+    //Conectar a una sala privada mediante el user._id
+    socket.join(user._id);
+
     //Recibimos emisión de mensaje
     socket.on("send-message", ({ id, message }) => {
-      sendMessage(user._id, user.name, message);
-      //Emitimos mensaje
-      io.emit("get-message", last10Messages());
+      if (id) {
+        
+      } else {
+        sendMessage(user._id, user.name, message);
+        //Emitimos mensaje
+        io.emit("get-message", last10Messages());
+      }
     });
 
     //Limpiar cuando alguien se desconecta

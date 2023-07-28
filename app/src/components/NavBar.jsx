@@ -18,12 +18,14 @@ const NavBar = () => {
             className="rounded w-10 h-10"
           />
         </figure>
-        <button
-          className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold px-4 rounded-2xl"
-          onClick={() => logout()}
-        >
-          Logout
-        </button>
+        <div className="h-[56px]" id="boxLogout">
+          <button
+            className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold px-4 rounded-2xl h-full"
+            onClick={() => logout()}
+          >
+            Logout
+          </button>
+        </div>
       </header>
     </>
   );

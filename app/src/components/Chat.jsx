@@ -3,8 +3,10 @@ import socketIo from "socket.io-client";
 import ChatBar from "./ChatBar";
 import AnimationHome from "./UI/AnimationHome";
 import ChatBody from "./ChatBody";
+import Connected from "./Connected";
 
 const Chat = ({ res }) => {
+  const [newChat, setNewChat] = useState(false);
   const [socket, setSocket] = useState(null);
   const user = res.user;
   const [connect, setConnect] = useState(false);
@@ -30,11 +32,12 @@ const Chat = ({ res }) => {
     // });
 
     setSocket(socketConnect);
+    console.log(newChat);
 
     return () => {
       socketConnect.close();
     };
-  }, [res, user]);
+  }, [res, user, newChat]);
 
   const handleClick = () => {
     socket.emit("New-User", { user, socketId: socket.id });
@@ -46,11 +49,19 @@ const Chat = ({ res }) => {
     socket.emit("disconnect-user");
   };
 
+  const disableLogout = () => {
+    if (connect) {
+      const boxLogout = document.querySelector("#boxLogout");
+      boxLogout.innerHTML = "";
+      boxLogout.innerHTML = Connected();
+    }
+  };
+
   return (
     <>
       {connect ? (
-        <div className="flex flex-col justify-around md:grid md:grid-cols-2 md:p-8 w-full min-h-[calc(100vh-96px)]">
-          <ChatBar socket={socket} connect={connect} />
+        <div className="flex flex-col justify-around md:grid md:grid-cols-3 md:p-8 w-full min-h-[calc(100vh-96px)]">
+          <ChatBar socket={socket} connect={connect} setNewChat={setNewChat} />
           <ChatBody socket={socket} />
           <button
             className="md:absolute md:bottom-8 md:left-8 bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"

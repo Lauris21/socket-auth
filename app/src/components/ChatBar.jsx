@@ -16,8 +16,8 @@ const ChatBar = ({ socket, connect }) => {
   }, [connect]);
 
   return (
-    <div>
-      <div>
+    <div className="flex flex-col w-[85%] items-center gap-5 p-5">
+      {/* <div>
         <h4>Active User </h4>
         <div>
           {users &&
@@ -25,7 +25,18 @@ const ChatBar = ({ socket, connect }) => {
               <p key={user.user._id}>{`🟢 ${user.user.name}`}</p>
             ))}
         </div>
-      </div>
+      </div> */}
+      <select>
+        <option value="" hidden>
+          ACTIVE USERS
+        </option>
+        {users &&
+          users.map((user) => (
+            <option key={user.user._id}>{`🟢 ${user.user.name}`}</option>
+          ))}
+      </select>
+      <button>NEW CHAT</button>
+      <div>Chats....</div>
     </div>
   );
 };
