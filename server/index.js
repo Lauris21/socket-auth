@@ -29,9 +29,11 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: false }));
 
-const { UserRoutes } = require("./src/api/routes/user.routes");
+const UserRoutes = require("./src/api/routes/user.routes");
+const ChatRoutes = require("./src/api/routes/chat.routes");
 
 app.use("/api/v1/user", UserRoutes);
+app.use("/api/v1/chat", ChatRoutes);
 
 //!Conexion con SOCKET IO
 const { socketController } = require("./src/sockets/socket.controller");

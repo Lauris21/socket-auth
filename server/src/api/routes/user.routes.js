@@ -10,6 +10,7 @@ const {
   resendCode,
   autoLogin,
   tokenRenovate,
+  getAll,
 } = require("../controllers/user.controller");
 
 const express = require("express");
@@ -24,6 +25,8 @@ UserRoutes.post("/checkUser", checkUser);
 UserRoutes.post("/resendCode", resendCode);
 UserRoutes.post("/login/autoLogin", autoLogin);
 UserRoutes.get("/", [isAuth], tokenRenovate);
+UserRoutes.get("/allUsers", getAll);
 
 UserRoutes.post("/sendMailCode/:id", sendMailCode);
-module.exports = { UserRoutes };
+
+module.exports = UserRoutes;

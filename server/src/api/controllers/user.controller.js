@@ -331,6 +331,19 @@ const tokenRenovate = async (req, res, next) => {
   }
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const allUsers = await User.find();
+    if (allUsers) {
+      return res.status(200).json(allUsers);
+    } else {
+      return res.status(404).json("Error not found Users");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   register,
   sendMailCode,
@@ -341,4 +354,5 @@ module.exports = {
   googleSignIn,
   autoLogin,
   tokenRenovate,
+  getAll,
 };

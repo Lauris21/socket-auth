@@ -5,28 +5,34 @@ const createChat = async (req, res, next) => {
   try {
     await Chat.syncIndexes();
 
-    const chatDuplicate = await Chat.findOne(
-      {
-        userInit: req.user._id,
-      },
-      { userTwo: req.body.user }
-    );
+    const userInit = req.user._id;
+    const { userTwo } = req.body;
+
+    const chatDuplicate = await Chat.findOne({ userInit }, { userTwo });
 
     if (!chatDuplicate) {
-      const newChat = new Chat({ ...req.body });
+      const newChat = new Chat({ ...req.body, userInit: userInit });
 
       try {
         const chatSave = await newChat.save();
 
         if (chatSave) {
           try {
-            await User.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(userInit, {
               $push: { chats: newChat._id },
             });
+
+            try {
+              await User.findByIdAndUpdate(userTwo, {
+                $push: { chats: newChat._id },
+              });
+              return res.status(200).json(chatSave);
+            } catch (error) {
+              return res.status(404).json("Error updating userTwo chats");
+            }
           } catch (error) {
-            return res.status(404).json("Error updating user chats");
+            return res.status(404).json("Error updating userInit chats");
           }
-          return res.status(200).json(chatSave, "Chat create ok");
         } else {
           return res.status(409).json("chat has been not create");
         }
@@ -41,4 +47,8 @@ const createChat = async (req, res, next) => {
   }
 };
 
-module.exports = { createChat };
+const prueba = () => {
+  console.log("prueba");
+};
+
+module.exports = { createChat, prueba };
