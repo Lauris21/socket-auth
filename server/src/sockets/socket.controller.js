@@ -5,7 +5,7 @@ const {
   pushUsers,
   sendMessage,
   last10Messages,
-} = require("../api/controllers/chat-message");
+} = require("../api/controllers/usersConnected");
 const { verifySocketToken } = require("../utils/token");
 
 const socketController = async (socket, io) => {
@@ -31,7 +31,6 @@ const socketController = async (socket, io) => {
     //Recibimos emisión de mensaje
     socket.on("send-message", ({ id, message }) => {
       if (id) {
-        
       } else {
         sendMessage(user._id, user.name, message);
         //Emitimos mensaje

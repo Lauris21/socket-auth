@@ -49,6 +49,11 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    chats: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Chat",
+      required: false,
+    },
   },
   {
     timestamps: true,
