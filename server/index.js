@@ -31,9 +31,11 @@ app.use(express.urlencoded({ limit: "10mb", extended: false }));
 
 const UserRoutes = require("./src/api/routes/user.routes");
 const ChatRoutes = require("./src/api/routes/chat.routes");
+const MessageRoutes = require("./src/api/routes/message.routes");
 
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/chat", ChatRoutes);
+app.use("/api/v1/message", MessageRoutes);
 
 //!Conexion con SOCKET IO
 const { socketController } = require("./src/sockets/socket.controller");
