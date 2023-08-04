@@ -17,7 +17,7 @@ const express = require("express");
 
 const UserRoutes = express.Router();
 
-UserRoutes.post("/register", upload.single("image"), register);
+UserRoutes.post("/register", register);
 UserRoutes.post("/login", login);
 UserRoutes.post("/google", googleSignIn);
 UserRoutes.delete("/delete", [isAuth], deleteUser);

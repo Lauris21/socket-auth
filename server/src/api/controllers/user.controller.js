@@ -9,11 +9,13 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const setError = require("../../helpers/handleError");
+const Chat = require("../models/chat.model");
+const Message = require("../models/message.model");
 dotenv.config();
 
 const URL_COMPLET = process.env.URL_COMPLET;
-const EMAIL_ENV = process.env.EMAIL;
-const PASSWORD_ENV = process.env.PASSWORD;
+const EMAIL_ENV = process.env.EMAIL_ENV;
+const PASSWORD_ENV = process.env.PASSWORD_ENV;
 
 const register = async (req, res, next) => {
   let catchImg = req.file?.path;
@@ -40,7 +42,7 @@ const register = async (req, res, next) => {
 
         if (userSave) {
           return res.redirect(
-            308,
+            307,
             `${URL_COMPLET}/api/v1/user/sendMailCode/${userSave._id}`
           );
           // return res.status(200).json(userSave);
@@ -81,13 +83,15 @@ const sendMailCode = async (req, res, next) => {
       text: `Your confirmation code is ${userDB.confirmationCode}. Thanks ${userDB.name}`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, async (error, info) => {
       if (error) {
-        console.log(error);
-        return res.status(404).json({
-          user: userDB,
-          confirmationCode: "error, resend code",
-        });
+        const userDelete = await User.findByIdAndDelete(userDB._id);
+        if (!userDelete) {
+          return res.status(404).json({
+            user: userDB,
+            confirmationCode: "error, resend code, user has been delete",
+          });
+        }
       } else {
         return res.status(200).json({
           user: userDB,
@@ -211,7 +215,24 @@ const deleteUser = async (req, res, next) => {
       return res.status(404).json("User dont delete");
     } else {
       deleteImgCloudinary(image);
-      return res.status(200).json("User has been delete");
+      try {
+        await Chat.deleteMany({ userInit: _id });
+        try {
+          await Chat.deleteMany({ userTwo: _id });
+          try {
+            await Message.deleteMany({ user: _id });
+            return res
+              .status(200)
+              .json("User, chats and messages have been delete");
+          } catch (error) {
+            return res.status(409).json("Error deleting messages of user");
+          }
+        } catch (error) {
+          return res.status(409).json("Error deleting chats with userTwo");
+        }
+      } catch (error) {
+        return res.status(409).json("Error deleting chats with userInit");
+      }
     }
   } catch (error) {
     return next(error);
