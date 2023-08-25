@@ -63,6 +63,8 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
+  const [connect, setConnect] = useState(false);
+
   const value = useMemo(
     () => ({
       user,
@@ -73,8 +75,10 @@ export const UserContextProvider = ({ children }) => {
       allUser,
       setAllUser,
       bridgeData,
+      connect,
+      setConnect,
     }),
-    [user, allUser]
+    [user, allUser, connect]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

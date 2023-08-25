@@ -4,12 +4,13 @@ import ChatBar from "./ChatBar";
 import AnimationHome from "./UI/AnimationHome";
 import ChatBody from "./ChatBody";
 import Connected from "./Connected";
+import { useAuth } from "../context/userContext";
 
 const Chat = ({ res }) => {
   const [newChat, setNewChat] = useState(false);
   const [socket, setSocket] = useState(null);
   const user = res.user;
-  const [connect, setConnect] = useState(false);
+  const { connect, setConnect } = useAuth();
 
   useEffect(() => {
     //Autentificamos el socket y le enviamos el token al server
@@ -41,21 +42,21 @@ const Chat = ({ res }) => {
 
   const handleClick = () => {
     socket.emit("New-User", { user, socketId: socket.id });
-    setConnect(true);
+    setConnect(() => true);
   };
 
   const handleDisconnect = () => {
-    setConnect(false);
+    setConnect(() => false);
     socket.emit("disconnect-user");
   };
 
-  const disableLogout = () => {
-    if (connect) {
-      const boxLogout = document.querySelector("#boxLogout");
-      boxLogout.innerHTML = "";
-      boxLogout.innerHTML = Connected();
-    }
-  };
+  // const disableLogout = () => {
+  //   if (connect) {
+  //     const boxLogout = document.querySelector("#boxLogout");
+  //     boxLogout.innerHTML = "";
+  //     boxLogout.innerHTML = Connected();
+  //   }
+  // };
 
   return (
     <>

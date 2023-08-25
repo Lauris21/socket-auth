@@ -2,7 +2,7 @@ import { useAuth } from "../context/userContext";
 import { LogOut } from "./Logout";
 
 const NavBar = () => {
-  const { user } = useAuth();
+  const { user, connect } = useAuth();
   return (
     <>
       <header className="p-5 flex flex-column justify-between bg-bgHeader">
@@ -20,7 +20,7 @@ const NavBar = () => {
           />
         </figure>
         <div className="h-[56px]" id="boxLogout">
-          <LogOut />
+          {connect ? <h6>🟢 CONNECTED</h6> : <LogOut />}
         </div>
       </header>
     </>
