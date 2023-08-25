@@ -50,19 +50,11 @@ const Chat = ({ res }) => {
     socket.emit("disconnect-user");
   };
 
-  // const disableLogout = () => {
-  //   if (connect) {
-  //     const boxLogout = document.querySelector("#boxLogout");
-  //     boxLogout.innerHTML = "";
-  //     boxLogout.innerHTML = Connected();
-  //   }
-  // };
-
   return (
     <>
       {connect ? (
         <div className="flex flex-col justify-around md:grid md:grid-cols-3 md:p-8 w-full min-h-[calc(100vh-96px)]">
-          <ChatBar socket={socket} connect={connect} setNewChat={setNewChat} />
+          <ChatBar socket={socket} setNewChat={setNewChat} />
           <ChatBody socket={socket} />
           <button
             className="md:absolute md:bottom-8 md:left-8 bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold py-2 px-4 rounded-2xl m-6 w-56 place-self-center"

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const ChatBar = ({ socket, connect }) => {
+const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const ChatBar = ({ socket, connect }) => {
     socket.on("disconnected-user", (data) => {
       setUsers(data);
     });
-  }, [connect]);
+  }, [socket, users]);
 
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
