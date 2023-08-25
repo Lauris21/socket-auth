@@ -1,7 +1,8 @@
 import { useAuth } from "../context/userContext";
+import { LogOut } from "./Logout";
 
 const NavBar = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   return (
     <>
       <header className="p-5 flex flex-column justify-between bg-bgHeader">
@@ -19,12 +20,7 @@ const NavBar = () => {
           />
         </figure>
         <div className="h-[56px]" id="boxLogout">
-          <button
-            className="bg-lightBlue hover:bg-darkBlue text-darkGray hover:text-lightGray font-bold px-4 rounded-2xl h-full"
-            onClick={() => logout()}
-          >
-            Logout
-          </button>
+          <LogOut />
         </div>
       </header>
     </>
