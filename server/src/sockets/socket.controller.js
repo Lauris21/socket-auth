@@ -30,6 +30,7 @@ const socketController = async (socket, io) => {
 
     //Recibimos emisión de mensaje
     socket.on("send-message", ({ id, message }) => {
+      console.log(message);
       if (id) {
       } else {
         sendMessage(user._id, user.name, message);

@@ -1,6 +1,6 @@
 const MessagesChat = ({ chat }) => {
-  console.log(chat);
   const messages = chat.messages;
+  console.log(messages);
 
   return (
     <div className="flex flex-col w-[95%] h-full">
@@ -9,7 +9,7 @@ const MessagesChat = ({ chat }) => {
         <img src={chat.userTwo.image} alt="image userTwo" className="w-10" />
       </div>
       <div className="h-[90%]">
-        <div>{messages && messages.map((item) => item.message)}</div>
+        <div>{messages && messages.map((item) => item.text)}</div>
       </div>
     </div>
   );
