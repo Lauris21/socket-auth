@@ -8,7 +8,10 @@ const createChat = async (req, res, next) => {
     const userInit = req.user._id;
     const { userTwo } = req.body;
 
-    const chatDuplicate = await Chat.findOne({ userInit }, { userTwo });
+    const chatDuplicate = await Chat.findOne({
+      userInit: userInit,
+      userTwo: userTwo,
+    });
 
     if (!chatDuplicate) {
       const newChat = new Chat({ ...req.body, userInit: userInit });
@@ -26,6 +29,7 @@ const createChat = async (req, res, next) => {
               await User.findByIdAndUpdate(userTwo, {
                 $push: { chats: newChat._id },
               });
+
               return res.status(200).json(chatSave);
             } catch (error) {
               return res.status(404).json("Error updating userTwo chats ❌");
@@ -34,7 +38,7 @@ const createChat = async (req, res, next) => {
             return res.status(404).json("Error updating userInit chats ❌");
           }
         } else {
-          return res.status(409).json("Error, chat hasn`t been create ❌");
+          return res.status(404).json("Error, chat hasn`t been create ❌");
         }
       } catch (error) {
         return res.status(404).json(error.message);

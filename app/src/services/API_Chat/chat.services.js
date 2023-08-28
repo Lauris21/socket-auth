@@ -2,7 +2,7 @@ import { API_Chat } from "./service.config";
 import { updateToken } from "../../utils/updateToken";
 
 export const createChat = async (data) => {
-  return API_Chat.post("chat/createChat", data, {
+  return API_Chat.post("chat", data, {
     headers: {
       Authorization: `Bearer ${updateToken()}`,
     },

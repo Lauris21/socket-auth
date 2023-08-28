@@ -3,7 +3,6 @@ import { autoLogin } from "../services/API_Chat/user.service";
 
 const useAutoLogin = async (allUser, userLogin) => {
   try {
-    // eslint-disable-next-line no-unsafe-optional-chaining
     const { password, email } = allUser?.user;
 
     const customData = {
