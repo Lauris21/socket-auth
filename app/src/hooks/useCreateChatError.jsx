@@ -1,10 +1,8 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
-import { useAuth } from "../context/userContext";
 
-const useCreateChatError = (res, setShow) => {
-  //const { setNewChat } = useAuth();
+const useCreateChatError = (res, setShow, newChat, setNewChat) => {
   if (res?.status == 200) {
-    //  setNewChat(() => !newChat);
+    setNewChat(() => !newChat);
     setShow(() => false);
     Swal.fire({
       icon: "success",

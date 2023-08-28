@@ -18,7 +18,6 @@ const ModalNewChat = () => {
       setAllUsers(all.data);
     };
     getAll();
-    console.log("all", allUsers);
 
     return () => {
       setUserTwo("");
@@ -26,24 +25,23 @@ const ModalNewChat = () => {
   }, [show]);
 
   useEffect(() => {
-    useCreateChatError(res, setShow);
+    useCreateChatError(res, setShow, newChat, setNewChat);
   }, [res]);
 
   const handleChange = (e) => {
-    const user = e.target.value.slice(2);
-    const userFilter = allUsers.filter((item) => item.email == user);
-    setUserTwo(userFilter[0]);
+    const user = e.target.value.slice(3);
+    const userFilter = allUsers.find((item) => item.email == user);
+    setUserTwo(userFilter);
   };
 
   const handleClick = async () => {
     const data = {
       userTwo: userTwo._id,
     };
-    console.log(data);
+
     setHidden(true);
     setRes(await createChat(data));
     setHidden(false);
-    console.log(res);
   };
 
   return (

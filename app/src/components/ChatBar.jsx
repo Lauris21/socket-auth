@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
 import ModalNewChat from "./ModalNewChat";
+import { getMeChats } from "../services/API_Chat/chat.services";
 
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
-  const { user } = useAuth();
+  const [meChats, setMeChats] = useState([]);
+  const { user, newChat, showChat, setShowChat } = useAuth();
 
   useEffect(() => {
     socket.on("active-users", (data) => {
@@ -17,6 +19,14 @@ const ChatBar = ({ socket }) => {
       setUsers(data);
     });
   }, [socket, users]);
+
+  useEffect(() => {
+    const getChats = async () => {
+      const chats = await getMeChats();
+      setMeChats(await chats.data);
+    };
+    getChats();
+  }, [newChat]);
 
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
@@ -42,10 +52,19 @@ const ChatBar = ({ socket }) => {
       </select>
       {/* <button>NEW CHAT</button> */}
       <ModalNewChat />
-      <div>
-        Chats....
+      <div className="flex flex-col items-center">
+        <p className="p-2">CHATS</p>
         {/* {user && user.chat.map((item) => <p>{item._id}</p>)} */}
-        {console.log(user)}
+        {meChats &&
+          meChats.map((item, i) => (
+            <p
+              className="hover:text-lg hover:bg-darkBlue cursor-pointer p-2 rounded"
+              key={i}
+              onClick={() => setShowChat(() => true)}
+            >
+              {item.userTwo.name}
+            </p>
+          ))}
       </div>
     </div>
   );

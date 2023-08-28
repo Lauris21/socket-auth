@@ -66,6 +66,7 @@ export const UserContextProvider = ({ children }) => {
 
   const [connect, setConnect] = useState(false);
   const [newChat, setNewChat] = useState(false);
+  const [showChat, setShowChat] = useState(false);
 
   const value = useMemo(
     () => ({
@@ -81,8 +82,10 @@ export const UserContextProvider = ({ children }) => {
       setConnect,
       newChat,
       setNewChat,
+      showChat,
+      setShowChat,
     }),
-    [user, allUser, connect]
+    [user, allUser, connect, newChat, showChat]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

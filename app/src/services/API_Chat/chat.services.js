@@ -12,3 +12,15 @@ export const createChat = async (data) => {
       return error;
     });
 };
+
+export const getMeChats = async () => {
+  return API_Chat.get("chat/getmeChat", {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
