@@ -62,3 +62,11 @@ export const updateTokenUser = async () => {
       return error;
     });
 };
+
+export const getAllUsers = async () => {
+  return API_Chat.get("user/allUsers")
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};

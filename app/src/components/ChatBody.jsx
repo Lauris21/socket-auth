@@ -28,9 +28,10 @@ const ChatBody = ({ socket }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between col-span-2">
+    <div className="flex flex-col justify-between col-span-2 items-center">
       {messages && <Messages messages={messages} />}
-      <form onSubmit={(e) => handleSumbit(e)}>
+      WELLCOME, INIT A NEW CHAT 💬
+      {/* <form onSubmit={(e) => handleSumbit(e)}>
         <input
           type="text"
           id="text-message"
@@ -42,7 +43,7 @@ const ChatBody = ({ socket }) => {
           onChange={(e) => setMessage(e.target.value)}
         />
         <button>Send</button>
-      </form>
+      </form> */}
     </div>
   );
 };

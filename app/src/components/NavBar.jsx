@@ -19,8 +19,12 @@ const NavBar = () => {
             className="rounded w-10 h-10"
           />
         </figure>
-        <div className="h-[56px]" id="boxLogout">
-          {connect ? <h6>🟢 CONNECTED</h6> : <LogOut />}
+        <div className="h-[56px] flex" id="boxLogout">
+          {connect ? (
+            <h6 className="place-self-center">🟢 CONNECTED</h6>
+          ) : (
+            <LogOut />
+          )}
         </div>
       </header>
     </>
