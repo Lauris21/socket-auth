@@ -5,6 +5,7 @@ const {
   getChatByUserTwo,
   getAllChats,
   getChatsOfUser,
+  getChatById,
 } = require("../controllers/chat.controller");
 
 const express = require("express");
@@ -15,5 +16,6 @@ ChatRoutes.delete("/delete/:id", deleteChat);
 ChatRoutes.get("/getChatByUserTwo", getChatByUserTwo);
 ChatRoutes.get("/getAllChats", getAllChats);
 ChatRoutes.get("/getmeChat", [isAuth], getChatsOfUser);
+ChatRoutes.get("/getById/:id", getChatById);
 
 module.exports = ChatRoutes;

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import Messages from "./Messages";
+import { useAuth } from "../context/userContext";
+import { getChatById } from "../services/API_Chat/chat.services";
+import MessagesChat from "./MessagesChat";
 
 const ChatBody = ({ socket }) => {
   const [message, setMessage] = useState("");
-
   const [messages, setMessages] = useState(null);
+  const [chat, setChat] = useState(null);
+  const { showChat } = useAuth();
+
   const id = "";
 
   useEffect(() => {
@@ -13,6 +18,16 @@ const ChatBody = ({ socket }) => {
       setMessages(payload);
     });
   }, [socket]);
+
+  useEffect(() => {
+    const getChat = async () => {
+      const data = await getChatById(showChat);
+      console.log(showChat);
+      setChat(data.data);
+    };
+    showChat && getChat();
+    console.log(chat);
+  }, [showChat]);
 
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -29,8 +44,13 @@ const ChatBody = ({ socket }) => {
 
   return (
     <div className="flex flex-col justify-between col-span-2 items-center">
-      {messages && <Messages messages={messages} />}
-      WELLCOME, INIT A NEW CHAT 💬
+      {chat ? (
+        <MessagesChat chat={chat} />
+      ) : (
+        <p> WELLCOME, INIT A NEW CHAT 💬</p>
+      )}
+      {/* {messages && <Messages messages={messages} />} */}
+
       {/* <form onSubmit={(e) => handleSumbit(e)}>
         <input
           type="text"

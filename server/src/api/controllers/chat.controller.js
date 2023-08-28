@@ -130,10 +130,27 @@ const getChatsOfUser = async (req, res, next) => {
   }
 };
 
+const getChatById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const chatById = await Chat.findById(id).populate("messages userTwo");
+
+    if (chatById) {
+      return res.status(200).json(chatById);
+    } else {
+      return res.status(404).json("Error, chat not found");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   createChat,
   deleteChat,
   getChatByUserTwo,
   getAllChats,
   getChatsOfUser,
+  getChatById,
 };

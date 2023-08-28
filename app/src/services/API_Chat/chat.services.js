@@ -24,3 +24,11 @@ export const getMeChats = async () => {
       return error;
     });
 };
+
+export const getChatById = async (id) => {
+  return API_Chat.get(`chat/getById/${id}`)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};

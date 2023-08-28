@@ -60,7 +60,7 @@ const ChatBar = ({ socket }) => {
             <p
               className="hover:text-lg hover:bg-darkBlue cursor-pointer p-2 rounded"
               key={i}
-              onClick={() => setShowChat(() => true)}
+              onClick={() => setShowChat(() => item._id)}
             >
               {item.userTwo.name}
             </p>
