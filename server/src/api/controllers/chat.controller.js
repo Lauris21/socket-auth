@@ -114,4 +114,26 @@ const getAllChats = async (req, res, next) => {
   }
 };
 
-module.exports = { createChat, deleteChat, getChatByUserTwo, getAllChats };
+const getChatsOfUser = async (req, res, next) => {
+  try {
+    const { _id } = req.user._id;
+
+    const chatsByUser = await Chat.find({ userInit: _id }).populate("userTwo");
+
+    if (chatsByUser) {
+      return res.status(200).json(chatsByUser);
+    } else {
+      return res.status(404).json("Chat not found");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = {
+  createChat,
+  deleteChat,
+  getChatByUserTwo,
+  getAllChats,
+  getChatsOfUser,
+};

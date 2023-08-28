@@ -89,7 +89,11 @@ const ModalNewChat = () => {
               </div>
 
               <div className="p-6 space-y-6">
-                <select required onChange={(e) => handleChange(e)}>
+                <select
+                  className="text-darkGray p-1"
+                  required
+                  onChange={(e) => handleChange(e)}
+                >
                   <option value="" hidden>
                     ALL USERS
                   </option>
@@ -98,7 +102,7 @@ const ModalNewChat = () => {
                       .filter((item) => item.email !== user.email)
                       .map((item, i) => (
                         <option key={item._id}>
-                          {i % 2 == 0 ? `🐥` : `🐠`}
+                          {i % 2 == 0 ? `🐥 ` : `🐠 `}
                           {`${item.email}`}
                         </option>
                       ))}

@@ -42,7 +42,11 @@ const ChatBar = ({ socket }) => {
       </select>
       {/* <button>NEW CHAT</button> */}
       <ModalNewChat />
-      <div>Chats....</div>
+      <div>
+        Chats....
+        {/* {user && user.chat.map((item) => <p>{item._id}</p>)} */}
+        {console.log(user)}
+      </div>
     </div>
   );
 };

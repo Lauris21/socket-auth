@@ -36,6 +36,7 @@ export const UserContextProvider = ({ children }) => {
       email: data.userDB.email,
       image: data.userDB.image,
       check: data.userDB.check,
+      chats: data.userDB.chats,
     };
     const dataString = JSON.stringify(dataCustom);
     setUser(dataCustom);

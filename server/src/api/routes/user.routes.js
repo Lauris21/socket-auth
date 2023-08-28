@@ -11,6 +11,7 @@ const {
   autoLogin,
   tokenRenovate,
   getAll,
+  getUser,
 } = require("../controllers/user.controller");
 
 const express = require("express");
@@ -26,6 +27,7 @@ UserRoutes.post("/resendCode", resendCode);
 UserRoutes.post("/login/autoLogin", autoLogin);
 UserRoutes.get("/", [isAuth], tokenRenovate);
 UserRoutes.get("/allUsers", getAll);
+UserRoutes.get("/getById", [isAuth], getUser);
 
 UserRoutes.post("/sendMailCode/:id", sendMailCode);
 

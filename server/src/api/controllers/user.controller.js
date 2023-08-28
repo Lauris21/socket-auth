@@ -365,6 +365,17 @@ const getAll = async (req, res, next) => {
   }
 };
 
+const getUser = async (req, res, next) => {
+  try {
+    const { _id } = req.user._id;
+    const user = await User.findById(_id).populate("chats");
+    console.log(user);
+    return res.status(200).json(user);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   register,
   sendMailCode,
@@ -376,4 +387,5 @@ module.exports = {
   autoLogin,
   tokenRenovate,
   getAll,
+  getUser,
 };
