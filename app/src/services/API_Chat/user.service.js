@@ -70,3 +70,27 @@ export const getAllUsers = async () => {
       return error;
     });
 };
+
+export const getUser = async () => {
+  return API_Chat.get("user/getById", {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const getChatUser = async () => {
+  return API_Chat.get("user/getChatUser", {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};

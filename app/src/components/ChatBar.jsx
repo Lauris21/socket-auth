@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
 import ModalNewChat from "./ModalNewChat";
 import { getMeChats } from "../services/API_Chat/chat.services";
+import { getChatUser } from "../services/API_Chat/user.service";
 
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
@@ -22,7 +23,7 @@ const ChatBar = ({ socket }) => {
 
   useEffect(() => {
     const getChats = async () => {
-      const chats = await getMeChats();
+      const chats = await getChatUser();
       setMeChats(await chats.data);
     };
     getChats();
@@ -30,15 +31,6 @@ const ChatBar = ({ socket }) => {
 
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
-      {/* <div>
-        <h4>Active User </h4>
-        <div>
-          {users &&
-            users.map((user) => (
-              <p key={user.user._id}>{`🟢 ${user.user.name}`}</p>
-            ))}
-        </div>
-      </div> */}
       <select>
         <option value="" hidden>
           ACTIVE USERS
@@ -62,7 +54,7 @@ const ChatBar = ({ socket }) => {
               key={i}
               onClick={() => setShowChat(() => item._id)}
             >
-              {item.userTwo.name}
+              {item.userInit?.name ? item.userInit?.name : item.userTwo.name}
             </p>
           ))}
       </div>

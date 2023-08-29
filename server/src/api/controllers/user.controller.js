@@ -29,7 +29,7 @@ const register = async (req, res, next) => {
     );
 
     if (!UserExist) {
-      const newUser = new User({ ...req.body, confirmationCode });
+      const newUser = new User({ ...req.body, confirmationCode, chats: [] });
 
       if (req.file) {
         newUser.image = req.file.path;
@@ -181,7 +181,7 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    const userDB = await User.findOne({ email });
+    const userDB = await User.findOne({ email }).populate("chats");
 
     if (userDB) {
       if (!userDB.estado) {
@@ -260,13 +260,17 @@ const googleSignIn = async (req, res, next) => {
             image: "https://pic.onlinewebfonts.com/svg/img_181369.png",
             check: true,
             confirmationCode: randomCode(),
+            chats: [],
           };
           const newUser = new User(data);
           await newUser.save();
-          if (newUser) {
+
+          const userSave = await User.findById(newUser._id);
+
+          if (userSave) {
             return res.status(200).json({
               msg: "User Google create okey 👌🏽",
-              newUser,
+              userSave,
             });
           } else {
             return res.status(404).json("Error register user");
@@ -369,8 +373,29 @@ const getUser = async (req, res, next) => {
   try {
     const { _id } = req.user._id;
     const user = await User.findById(_id).populate("chats");
-    console.log(user);
-    return res.status(200).json(user);
+    if (user) {
+      return res.status(200).json(user);
+    } else {
+      return res.status(404).json("User not found");
+    }
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const getChatUser = async (req, res, next) => {
+  try {
+    const { _id } = req.user._id;
+
+    const chats = await Chat.find({ userInit: _id }).populate("userTwo");
+
+    const chatsUser = await Chat.find({ userTwo: _id }).populate("userInit");
+
+    if (chats.length > 0 || chatsUser.length > 0) {
+      return res.status(200).json([...chats, ...chatsUser]);
+    } else {
+      return res.status(404).json("Chat not found");
+    }
   } catch (error) {
     return next(error);
   }
@@ -388,4 +413,5 @@ module.exports = {
   tokenRenovate,
   getAll,
   getUser,
+  getChatUser,
 };

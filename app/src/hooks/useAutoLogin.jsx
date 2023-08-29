@@ -19,6 +19,7 @@ const useAutoLogin = async (allUser, userLogin) => {
         email: setData.data.user.email,
         image: setData.data.user.image,
         check: setData.data.user.check,
+        chat: setData.data.user.check,
       };
 
       const dataString = JSON.stringify(dataCustom);

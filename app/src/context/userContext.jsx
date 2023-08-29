@@ -68,6 +68,8 @@ export const UserContextProvider = ({ children }) => {
   const [newChat, setNewChat] = useState(false);
   const [showChat, setShowChat] = useState(false);
 
+  console.log(user);
+
   const value = useMemo(
     () => ({
       user,

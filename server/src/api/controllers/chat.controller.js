@@ -11,14 +11,14 @@ const createChat = async (req, res, next) => {
 
     const chatDuplicate = await Chat.findOne({
       userInit: userInit,
-      userTwo: userInit,
+      userTwo: userTwo,
     });
     const chatDuplicateTwo = await Chat.findOne({
       userInit: userTwo,
-      userTwo: userTwo,
+      userTwo: userInit,
     });
 
-    if (!chatDuplicate) {
+    if (!chatDuplicate && !chatDuplicateTwo) {
       const newChat = new Chat({ ...req.body, userInit: userInit });
 
       try {
