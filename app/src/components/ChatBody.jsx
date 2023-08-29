@@ -11,15 +11,20 @@ const ChatBody = ({ socket }) => {
   const [chat, setChat] = useState(null);
   const [res, setRres] = useState(null);
   const { showChat } = useAuth();
+  const [hidden, setHidden] = useState(false);
 
   const id = "";
 
   useEffect(() => {
     //Recibimos mensaje del server
     socket.on("get-message", (payload) => {
-      setMessages(payload.message);
+      setMessages(payload);
     });
-  }, [message]);
+  }, [hidden]);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   useEffect(() => {
     const getChat = async () => {
@@ -34,18 +39,28 @@ const ChatBody = ({ socket }) => {
       text: message,
       chat: chat._id,
     };
+    setHidden(true);
     setRres(await createMessage(data));
     socket.emit("send-message", { message, id });
     setMessage("");
+    setHidden(false);
   };
 
   //Enviamos mensaje con boton "Enter"
-  const handleKeyCode = (keyCode) => {
-    if (keyCode !== 13) return;
-    if (message == "") return;
-    console.log(message);
-    socket.emit("send-message", { message, id });
-  };
+  // const handleKeyCode = async (keyCode) => {
+  //   if (keyCode !== 13) return;
+  //   if (message == "") return;
+  //   const data = {
+  //     text: message,
+  //     chat: chat._id,
+  //   };
+  //   setHidden(true);
+  //   setRres(await createMessage(data));
+  //   console.log(message);
+  //   socket.emit("send-message", { message, id });
+  //   setMessage("");
+  //   setHidden(false);
+  // };
 
   return (
     <div className="flex flex-col justify-between col-span-2 items-center">
@@ -61,10 +76,13 @@ const ChatBody = ({ socket }) => {
               placeholder="message"
               autoFocus
               value={message}
-              onKeyUp={(keyCode) => handleKeyCode(keyCode)}
+              disabled={hidden}
+              // onKeyUp={(keyCode) => handleKeyCode(keyCode)}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button onClick={() => handleClick()}>Send</button>
+            <button disabled={hidden} onClick={() => handleClick()}>
+              Send
+            </button>
           </div>
         </>
       ) : (

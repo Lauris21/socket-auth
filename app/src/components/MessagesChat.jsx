@@ -1,6 +1,5 @@
 const MessagesChat = ({ chat }) => {
   const messages = chat.messages;
-  console.log(messages);
 
   return (
     <div className="flex flex-col w-[95%] h-[70%]">
@@ -10,7 +9,7 @@ const MessagesChat = ({ chat }) => {
       </div>
       <div className="h-full">
         <div className="flex flex-col">
-          {messages && messages.map((item) => <p>{item.text}</p>)}
+          {messages && messages.map((item, i) => <p key={i}>{item.text}</p>)}
         </div>
       </div>
     </div>

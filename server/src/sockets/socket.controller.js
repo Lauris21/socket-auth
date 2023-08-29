@@ -33,9 +33,9 @@ const socketController = async (socket, io) => {
       console.log(message);
       if (id) {
       } else {
-        sendMessage(user._id, user.name, message);
+        // sendMessage(user._id, user.name, message);
         //Emitimos mensaje
-        io.emit("get-message", last10Messages());
+        io.emit("get-message", message);
       }
     });
 

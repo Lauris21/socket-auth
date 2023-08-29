@@ -6,14 +6,14 @@ const Messages = ({ messages }) => {
   }, [messages]);
   return (
     <>
-      {messages.map((message, i) => (
+      {/* {messages.map((message, i) => (
         <div key={i}>
           <p>
             <span>{message.name}</span>
             {message.message}
           </p>
         </div>
-      ))}
+      ))} */}
     </>
   );
 };

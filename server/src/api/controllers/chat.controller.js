@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Chat = require("../models/chat.model");
+const Message = require("../models/message.model");
 
 const createChat = async (req, res, next) => {
   try {
@@ -10,6 +11,10 @@ const createChat = async (req, res, next) => {
 
     const chatDuplicate = await Chat.findOne({
       userInit: userInit,
+      userTwo: userInit,
+    });
+    const chatDuplicateTwo = await Chat.findOne({
+      userInit: userTwo,
       userTwo: userTwo,
     });
 
@@ -63,16 +68,28 @@ const deleteChat = async (req, res, next) => {
 
         const testUser = await User.find({ chats: id });
 
-        return res.status(200).json({
-          deletedChat: deletedChat,
-          testDeleteChat: (await Chat.findById(id))
-            ? "Error chat is not delete ❌"
-            : "🗑️ Chat has been delete ❌",
-          testUser:
-            testUser.length > 0
-              ? "Error update Users"
-              : "User has been update ✅",
-        });
+        try {
+          await Message.deleteMany({ chat: id });
+
+          const testMessage = await Message.find({ chat: id });
+
+          return res.status(200).json({
+            deletedChat: deletedChat,
+            testDeleteChat: (await Chat.findById(id))
+              ? "Error chat is not delete ❌"
+              : "🗑️ Chat has been delete ❌",
+            testUser:
+              testUser.length > 0
+                ? "Error update Users"
+                : "User has been update ✅",
+            testMessage:
+              testMessage.length > 0
+                ? "Error message is not delete ❌"
+                : "Message has been delete ✅",
+          });
+        } catch (error) {
+          return res.status(409).json("Error updating messages");
+        }
       } catch (error) {
         return res.status(409).json("Error updating users");
       }
