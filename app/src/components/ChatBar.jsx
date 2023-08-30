@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
 import ModalNewChat from "./ModalNewChat";
-import { getMeChats } from "../services/API_Chat/chat.services";
 import { getChatUser } from "../services/API_Chat/user.service";
 
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
   const [meChats, setMeChats] = useState([]);
-  const { user, newChat, showChat, setShowChat } = useAuth();
+  const { user, newChat, setShowChat } = useAuth();
 
   useEffect(() => {
     socket.on("active-users", (data) => {
@@ -42,11 +41,9 @@ const ChatBar = ({ socket }) => {
               <option key={item.user._id}>{`🟢 ${item.user.name}`}</option>
             ))}
       </select>
-      {/* <button>NEW CHAT</button> */}
       <ModalNewChat />
       <div className="flex flex-col items-center">
         <p className="p-2">CHATS</p>
-        {/* {user && user.chat.map((item) => <p>{item._id}</p>)} */}
         {meChats &&
           meChats.map((item, i) => (
             <p

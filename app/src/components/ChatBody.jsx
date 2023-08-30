@@ -10,7 +10,7 @@ const ChatBody = ({ socket }) => {
   const [messages, setMessages] = useState(null);
   const [chat, setChat] = useState(null);
   const [res, setRres] = useState(null);
-  const { showChat } = useAuth();
+  const { showChat, connect, setShowChat } = useAuth();
   const [hidden, setHidden] = useState(false);
 
   const id = "";
@@ -32,7 +32,15 @@ const ChatBody = ({ socket }) => {
       setChat(data.data);
     };
     showChat && getChat();
-  }, [showChat]);
+    console.log(connect);
+
+    return () => {
+      setChat(null);
+      setMessages(null);
+      setRres(null);
+      setShowChat(() => null);
+    };
+  }, [showChat, connect]);
 
   const handleClick = async () => {
     const data = {
