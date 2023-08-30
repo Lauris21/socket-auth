@@ -4,13 +4,14 @@ import { useAuth } from "../context/userContext";
 import { createChat } from "../services/API_Chat/chat.services";
 import useCreateChatError from "../hooks/useCreateChatError";
 
-const ModalNewChat = () => {
+const ModalNewChat = ({ socket }) => {
   const { user, newChat, setNewChat } = useAuth();
   const [show, setShow] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [userTwo, setUserTwo] = useState("");
   const [hidden, setHidden] = useState(false);
   const [res, setRes] = useState({});
+  const [chatCreated, setChatCreated] = useState(false);
 
   useEffect(() => {
     const getAll = async () => {
@@ -21,12 +22,29 @@ const ModalNewChat = () => {
 
     return () => {
       setUserTwo("");
+      setChatCreated(false);
     };
   }, [show]);
 
   useEffect(() => {
-    useCreateChatError(res, setShow, newChat, setNewChat);
+    useCreateChatError(
+      res,
+      setRes,
+      setShow,
+      newChat,
+      setNewChat,
+      setChatCreated
+    );
   }, [res]);
+
+  useEffect(() => {
+    chatCreated && socket.emit("new-chat");
+    console.log("emitiendo nuevo chat", chatCreated);
+
+    return () => {
+      setChatCreated(false);
+    };
+  }, [chatCreated]);
 
   const handleChange = (e) => {
     const user = e.target.value.slice(3);
@@ -38,7 +56,6 @@ const ModalNewChat = () => {
     const data = {
       userTwo: userTwo._id,
     };
-
     setHidden(true);
     setRes(await createChat(data));
     setHidden(false);

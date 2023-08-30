@@ -32,7 +32,6 @@ const ChatBody = ({ socket }) => {
       setChat(data.data);
     };
     showChat && getChat();
-    console.log(connect);
 
     return () => {
       setChat(null);
@@ -49,6 +48,7 @@ const ChatBody = ({ socket }) => {
     };
     setHidden(true);
     setRres(await createMessage(data));
+    const id = data.chat;
     socket.emit("send-message", { message, id });
     setMessage("");
     setHidden(false);

@@ -28,10 +28,19 @@ const socketController = async (socket, io) => {
     //Conectar a una sala privada mediante el user._id
     socket.join(user._id);
 
+    // Recibimos señal de que se ha creado un chat para actualizar navChat del otro User
+    socket.on("new-chat", () => {
+      console.log("Llega nuevo mensaje");
+      io.emit("update-chatBar");
+    });
+
     //Recibimos emisión de mensaje
     socket.on("send-message", ({ id, message }) => {
       console.log(message);
+      //Si viene id es un mensaje privado
       if (id) {
+        console.log(id);
+        io.emit("get-private-message", message);
       } else {
         // sendMessage(user._id, user.name, message);
         //Emitimos mensaje

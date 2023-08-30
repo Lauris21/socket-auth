@@ -6,6 +6,7 @@ import { getChatUser } from "../services/API_Chat/user.service";
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
   const [meChats, setMeChats] = useState([]);
+  const [chatCreated, setChatCreated] = useState(false);
   const { user, newChat, setShowChat } = useAuth();
 
   useEffect(() => {
@@ -26,7 +27,17 @@ const ChatBar = ({ socket }) => {
       setMeChats(await chats.data);
     };
     getChats();
-  }, [newChat]);
+  }, [newChat, chatCreated]);
+
+  useEffect(() => {
+    socket.on("update-chatBar", () => {
+      console.log("recibiendo actualizacion");
+      setChatCreated(true);
+    });
+    return () => {
+      setChatCreated(false);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
@@ -41,7 +52,7 @@ const ChatBar = ({ socket }) => {
               <option key={item.user._id}>{`🟢 ${item.user.name}`}</option>
             ))}
       </select>
-      <ModalNewChat />
+      <ModalNewChat socket={socket} />
       <div className="flex flex-col items-center">
         <p className="p-2">CHATS</p>
         {meChats &&

@@ -1,10 +1,20 @@
 import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
-const useCreateChatError = (res, setShow, newChat, setNewChat) => {
+const useCreateChatError = (
+  res,
+  setRes,
+  setShow,
+  newChat,
+  setNewChat,
+  setChatCreated
+) => {
   if (res?.status == 200) {
     setNewChat(() => !newChat);
     setShow(() => false);
-    Swal.fire({
+    setChatCreated(() => true);
+    setRes(() => ({}));
+    // setChatCreated(() => false);
+    return Swal.fire({
       icon: "success",
       title: "Chat has been create 💬",
       showConfirmButton: false,
@@ -14,7 +24,8 @@ const useCreateChatError = (res, setShow, newChat, setNewChat) => {
 
   if (res?.response?.status == 409) {
     setShow(() => false);
-    Swal.fire({
+    setRes(() => ({}));
+    return Swal.fire({
       icon: "error",
       title: "This chat already exists 💬",
       showConfirmButton: false,
@@ -23,7 +34,8 @@ const useCreateChatError = (res, setShow, newChat, setNewChat) => {
   }
 
   if (res?.response?.status == 404) {
-    Swal.fire({
+    setRes(() => ({}));
+    return Swal.fire({
       icon: "error",
       title: "Chat hasn`t been create 💬",
       showConfirmButton: false,
