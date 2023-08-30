@@ -13,7 +13,6 @@ const useCreateChatError = (
     setShow(() => false);
     setChatCreated(() => true);
     setRes(() => ({}));
-    // setChatCreated(() => false);
     return Swal.fire({
       icon: "success",
       title: "Chat has been create 💬",

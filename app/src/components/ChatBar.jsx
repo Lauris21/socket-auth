@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/userContext";
 import ModalNewChat from "./ModalNewChat";
 import { getChatUser } from "../services/API_Chat/user.service";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
@@ -31,7 +32,12 @@ const ChatBar = ({ socket }) => {
 
   useEffect(() => {
     socket.on("update-chatBar", () => {
-      console.log("recibiendo actualizacion");
+      Swal.fire({
+        icon: "success",
+        title: "Has been invited to Chat 💬",
+        showConfirmButton: false,
+        timer: 1200,
+      });
       setChatCreated(true);
     });
     return () => {

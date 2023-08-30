@@ -39,7 +39,6 @@ const ModalNewChat = ({ socket }) => {
 
   useEffect(() => {
     chatCreated && socket.emit("new-chat");
-    console.log("emitiendo nuevo chat", chatCreated);
 
     return () => {
       setChatCreated(false);
