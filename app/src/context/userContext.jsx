@@ -69,8 +69,6 @@ export const UserContextProvider = ({ children }) => {
   const [showChat, setShowChat] = useState(false);
   const [idSocketUserTwo, setidSocketUserTwo] = useState(null);
 
-  console.log(user);
-
   const value = useMemo(
     () => ({
       user,

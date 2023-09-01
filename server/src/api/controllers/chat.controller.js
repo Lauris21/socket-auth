@@ -151,7 +151,9 @@ const getChatById = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const chatById = await Chat.findById(id).populate("messages userTwo");
+    const chatById = await Chat.findById(id).populate(
+      "messages userTwo userInit"
+    );
 
     if (chatById) {
       return res.status(200).json(chatById);

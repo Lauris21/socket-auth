@@ -51,7 +51,7 @@ const ChatBody = ({ socket }) => {
     setRres(await createMessage(data));
     const idChat = data.chat;
     // const userId // = chat.userInit?.name? || chat.userTwo?.name?
-    socket.emit("send-message", { message, idChat });
+    socket.emit("send-message", { message, idChat, idSocketUserTwo });
     setMessage("");
     setHidden(false);
   };

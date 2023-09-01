@@ -58,24 +58,18 @@ const ChatBar = ({ socket }) => {
 
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
-      <select>
-        <option value="" hidden>
-          ACTIVE USERS
-        </option>
-        {users &&
-          users
-            .filter((item) => item.user.email !== user.email)
-            .map((item) => (
-              <option key={item.user._id}>{`🟢 ${item.user.name}`}</option>
-            ))}
-      </select>
+      <h4>ACTIVE USERS</h4>
+      {users &&
+        users
+          .filter((item) => item.user.email !== user.email)
+          .map((item) => <p key={item.user._id}>{`🟢 ${item.user.name}`}</p>)}
       <ModalNewChat socket={socket} />
       <div className="flex flex-col items-center">
-        <p className="p-2">CHATS</p>
+        <h4 className="p-2">CHATS</h4>
         {meChats &&
           meChats.map((item, i) => (
             <p
-              className="hover:text-lg hover:bg-darkBlue cursor-pointer p-2 rounded"
+              className="hover:bg-darkBlue cursor-pointer p-2 rounded"
               key={i}
               id={item._id}
               onClick={() => handleClick(item._id)}
