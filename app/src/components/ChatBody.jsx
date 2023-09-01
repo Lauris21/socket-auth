@@ -10,8 +10,9 @@ const ChatBody = ({ socket }) => {
   const [messages, setMessages] = useState(null);
   const [chat, setChat] = useState(null);
   const [res, setRres] = useState(null);
-  const { showChat, connect, setShowChat } = useAuth();
   const [hidden, setHidden] = useState(false);
+
+  const { showChat, connect, setShowChat, idSocketUserTwo } = useAuth();
 
   const id = "";
 
@@ -48,8 +49,9 @@ const ChatBody = ({ socket }) => {
     };
     setHidden(true);
     setRres(await createMessage(data));
-    const id = data.chat;
-    socket.emit("send-message", { message, id });
+    const idChat = data.chat;
+    // const userId // = chat.userInit?.name? || chat.userTwo?.name?
+    socket.emit("send-message", { message, idChat });
     setMessage("");
     setHidden(false);
   };

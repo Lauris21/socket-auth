@@ -8,7 +8,7 @@ const ChatBar = ({ socket }) => {
   const [users, setUsers] = useState([]);
   const [meChats, setMeChats] = useState([]);
   const [chatCreated, setChatCreated] = useState(false);
-  const { user, newChat, setShowChat } = useAuth();
+  const { user, newChat, setShowChat, setidSocketUserTwo } = useAuth();
 
   useEffect(() => {
     socket.on("active-users", (data) => {
@@ -45,6 +45,17 @@ const ChatBar = ({ socket }) => {
     };
   }, []);
 
+  const handleClick = (id) => {
+    setShowChat(() => id);
+    const nameUserTwo = document.getElementById(`${id}`).textContent;
+    const idUserTwo = users
+      ?.filter((user) => user.user.name == nameUserTwo)
+      .map((item) => item.socketId);
+    if (idUserTwo) {
+      setidSocketUserTwo(() => idUserTwo);
+    }
+  };
+
   return (
     <div className="flex flex-col w-[85%] items-center gap-5 p-5">
       <select>
@@ -66,7 +77,8 @@ const ChatBar = ({ socket }) => {
             <p
               className="hover:text-lg hover:bg-darkBlue cursor-pointer p-2 rounded"
               key={i}
-              onClick={() => setShowChat(() => item._id)}
+              id={item._id}
+              onClick={() => handleClick(item._id)}
             >
               {item.userInit?.name ? item.userInit?.name : item.userTwo.name}
             </p>

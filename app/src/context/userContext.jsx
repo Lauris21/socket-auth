@@ -67,6 +67,7 @@ export const UserContextProvider = ({ children }) => {
   const [connect, setConnect] = useState(false);
   const [newChat, setNewChat] = useState(false);
   const [showChat, setShowChat] = useState(false);
+  const [idSocketUserTwo, setidSocketUserTwo] = useState(null);
 
   console.log(user);
 
@@ -86,8 +87,10 @@ export const UserContextProvider = ({ children }) => {
       setNewChat,
       showChat,
       setShowChat,
+      idSocketUserTwo,
+      setidSocketUserTwo,
     }),
-    [user, allUser, connect, newChat, showChat]
+    [user, allUser, connect, newChat, showChat, idSocketUserTwo]
   );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
